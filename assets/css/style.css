@@ -1,0 +1,274 @@
+/*begin global styling*/
+*{
+  box-sizing: border-box;
+  margin: 0;
+}
+
+html, body{
+	height: 100%;
+	font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+}
+
+h1{ 
+  display: block;
+  font-size: 2em;
+  margin-top: 0.67em;
+  margin-bottom: 0.67em;
+  margin-left: 0;
+  margin-right: 0;
+  font-weight: bold;
+}
+
+h2{
+  display: block;
+  font-size: 1.5em;
+  margin-top: 0.83em;
+  margin-bottom: 0.83em;
+  margin-left: 0;
+  margin-right: 0;
+  font-weight: bold;
+}
+
+h3{ 
+  display: block;
+  font-size: 1.17em;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  margin-left: 0;
+  margin-right: 0;
+  font-weight: bold;
+}
+/*end global styling*/
+
+.hide{
+	display: none;
+}
+
+.page-wrapper{
+	width: 100%;
+	height: 100%;
+  margin: 0 auto;
+	position: relative;
+}
+
+.header{
+  background-color: #000000;
+  padding: 10px 0px 10px 0px; 
+  border-left: 70px solid #ffffff;
+}
+
+.header-image{
+  position: relative;
+  width: 100%;
+  height: 85px;
+	background-image: url("../images/004.jpg");
+	background-size: cover;
+	background-position: right;
+  z-index: 99;
+  /*border: 1px solid #000000;
+  border-top-right-radius: 50px;
+  border-bottom-right-radius: 50px;*/
+}
+
+.logo{
+  position: absolute;
+  left: 10px;
+  width: 115px;
+  height: 200px;
+  background-image: url("../images/logoNew1.png");
+  z-index: 100; 
+}
+
+.logo2{
+  position: absolute;
+  top: 42px;
+  left: 54px;
+  width: 244px;
+  height: 159px;
+  background-image: url("../images/i_was_here.png");
+  z-index: 100;  
+}
+
+.divider{
+  position: absolute;
+  top: 10px;
+  right: 73px;
+  width: 35px;
+  height: 85px;
+  background-image: url("../images/divider3.png");
+  z-index: 101;  
+}
+
+.login{
+  position: absolute;
+  top: 10px;
+  right: 0px;
+  width: 90px;
+  height: 85px;
+  background-image: url("../images/login1.png");
+  cursor: pointer;
+  z-index: 100;
+}
+
+.login:hover{
+  background-image: url("../images/login2.png");
+}
+
+.world{
+  background-image: url("../images/world.png");
+  position: absolute;
+  top: -35px;
+  left: -98px;
+  width: 500px;
+  height: 291px;
+  z-index: 99;
+}
+
+.search-area{
+  position: relative;
+  width: 100%;
+  height: 50px;
+  float: right;
+}
+
+.inner{
+  width: 50%;
+  height: 40px;
+  float: right;
+}
+
+.btn-primary{
+  background-color: #022455;
+  border-color: #022455;
+  border-top-right-radius: 0px;
+  border-top-left-radius: 0px;
+}
+
+.btn{
+  /*margin-top: 2px;*/
+}
+
+.right{
+  float: right;
+  position: relative;
+}
+
+/*begin bootstrap search*/
+.search {
+  /*padding: 10px 0;*/
+  width: 375px;
+  height: 35px;
+  position: relative;
+  /*left: 10px;*/
+  float: right;
+  line-height: 22px;
+}
+
+.search input {
+  position: absolute;
+  width: 375px;
+  margin-left: 0px;
+  height: 35px;
+  line-height: 18px;
+  padding: 0 2px 0 2px;
+  border-radius:1px;
+  z-index: 99;
+}
+
+.search-cover{
+  background-image: url("../images/search-pic.png");
+  width: 281px;
+  height: 35px;
+  position: absolute;
+  border: 1px solid #000000;
+  background-color: #000000;
+  color: #ffffff;
+  text-align: center;
+  -webkit-transition: all 0.7s ease-in-out;
+  -moz-transition: all 0.7s ease-in-out;
+  -o-transition: all 0.7s ease-in-out;
+  transition: all 0.7s ease-in-out;
+  z-index: 100;
+}
+
+.search:hover .search-cover{
+  height: 0px;
+}
+
+/*used to keep .search-cover hidden during focus*/
+.no-height{
+  height: 0px !important;
+}
+
+.btn {
+  height: 35px;
+  position: absolute;
+  padding: 3px 17px 3px 17px;
+  font-size: 14pt;
+  right: 0;
+  /*border: 1px solid #000000;*/
+  border-radius:0px;
+  z-index: 100;
+}
+/*end bootstrap search*/
+
+.black{
+  background-color: #000000;
+}
+
+.black:hover{
+  background-color: #000000; 
+  border: 1px solid #000000; 
+}
+
+.black:active:focus{
+  background-color: #000000; 
+  border: 1px solid #000000;  
+}
+
+.black:visited{
+  background-color: #000000; 
+  border: 1px solid #000000;  
+}
+
+.about{
+  background-image: url("../images/about.png");
+}
+
+.about:hover{
+  background-image: url("../images/about1.png"); 
+  border: 1px solid #000000; 
+}
+
+.about:active:focus{
+  background-image: url("../images/about1.png"); 
+  border: 1px solid #000000;  
+}
+
+.about:visited{
+  background-image: url("../images/about1.png"); 
+  border: 1px solid #000000;  
+}
+
+.blue{
+  background-image: url("../images/home.png");
+}
+
+.blue:hover{
+  background-image: url("../images/home1.png"); 
+  border: 1px solid #000000; 
+}
+
+.blue:active:focus{
+  background-image: url("../images/home1.png"); 
+  border: 1px solid #000000;  
+}
+
+.blue:visited{
+  background-image: url("../images/home1.png"); 
+  border: 1px solid #000000;  
+}
+
+.relative{
+  position: relative;
+}
