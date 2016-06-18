@@ -14,11 +14,14 @@
 	
 
 var key = "cbd1ecb89687e74e";
-var queryURL = "http://api.wunderground.com/api/" + key +/*Your_Key*/"/conditions/q/NY/Brooklyn.json";
+var stateAbbreviation = "NY";
+var city = "manhattan";
+var queryURL = "http://api.wunderground.com/api/" + key +/*Your_Key*/"/conditions/q/" + stateAbbreviation + "/" + city + ".json";
 
 $.ajax({url: queryURL, method: 'GET'})
 	.done(function(response) {
 		console.log(response);
+
 	})
 
 
