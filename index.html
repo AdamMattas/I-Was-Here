@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Weather</title>
+
+
+</head>
+<body>
+
+	<div class="container">
+
+	<!--city name or city name/country code-->
+
+		<div class="left"></div>
+		<div class="right"></div>
+	</div>
+
+<script src='http://code.jquery.com/jquery-2.1.3.min.js'></script>
+<script type="text/javascript" src="javascript.js"></script>
+
+
+<script type="text/javascript">
+
+var apiId = "37b8f475868a63f8c263170856dd0132";
+
+var cityName;//p=
+var zip = "10314";//zip=
+var lat;//lat=
+var lon;//lon=
+var cityId = "524901";//id=
+
+var url = "api.openweathermap.org/data/2.5/forecast?id=" + cityId + "&APPID=" + apiId;
+
+//city ID, is recommended for better results, 
+//http://bulk.openweathermap.org/sample/
+//use either p={city name} or id={city id} or lat={lat}&lon={lon} or zip={zip code}
+
+var queryURL = "https://api.openweathermap.org/data/2.5/forecast?id=524901&APPID=" + apiId;
+
+jQuery.ajax({url: queryURL, method: 'GET'})
+	.done(function(response) {
+		console.log(response);
+	})
+</script>
+
+</body>
+</html>

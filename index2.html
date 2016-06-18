@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Weather2</title>
+	<!--css/reset-->
+</head>
+<body>
+
+<!--div/design-->
+
+
+<script src='http://code.jquery.com/jquery-2.1.3.min.js'></script>
+<script type="text/javascript">
+	
+
+var key = "cbd1ecb89687e74e";
+var queryURL = "http://api.wunderground.com/api/" + key +/*Your_Key*/"/conditions/q/NY/Brooklyn.json";
+
+$.ajax({url: queryURL, method: 'GET'})
+	.done(function(response) {
+		console.log(response);
+	})
+
+
+
+
+</script>
+
+</body>
+</html>
