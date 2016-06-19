@@ -114,6 +114,21 @@ h3{
   background-image: url("../images/login2.png");
 }
 
+.logout{
+  position: absolute;
+  top: 10px;
+  right: 0px;
+  width: 90px;
+  height: 85px;
+  background-image: url("../images/logout1.png");
+  cursor: pointer;
+  z-index: 100;
+}
+
+.logout:hover{
+  background-image: url("../images/logout2.png");
+}
+
 .world{
   background-image: url("../images/world.png");
   position: absolute;
