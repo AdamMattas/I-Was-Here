@@ -1,10 +1,11 @@
 $(document).on('ready', function(){
 
+    // Initial Values
     var user = "";
     var userName = "";
     // Firebase link
     var dataRef = new Firebase("https://i-was-here.firebaseio.com/");
-    // Initial Values
+    
     var authData = dataRef.getAuth();
 
     checkLogin();
@@ -24,11 +25,11 @@ $(document).on('ready', function(){
               console.log(snapshot.val().username);
               userName = snapshot.val().username;
 
-              var userBtn = $('<a>').text(userName);//create a <a> with a textnode of the username
-                userBtn.addClass('btn btn-primary blue');
-                userBtn.attr('href', 'user.html');//added href attribute
+              var userBtn = $('<a>').text(userName); //create a <a> with a textnode of the username
+                userBtn.addClass('btn btn-primary user'); //added classes for link
+                userBtn.attr('href', 'user.html'); //added href attribute
 
-                $('#nav-logged').prepend(userBtn);//prepends entire image div to image-area div
+                $('#nav-logged').prepend(userBtn);//prepends image to navigation bar
             }, function (errorObject) {
               console.log("The read failed: " + errorObject.code);
             });
@@ -36,8 +37,6 @@ $(document).on('ready', function(){
             //hide login-button and show logout-button if client is authenticated
             $("#login-button").addClass('hide').removeClass('show');
             $("#logout-button").addClass('show').removeClass('hide');
-            // $("#user-button").addClass('show').removeClass('hide');
-            // $("#user-button").text(userName);
 
         }
     }
@@ -47,10 +46,10 @@ $(document).on('ready', function(){
         //check if user is logged in
         if(authData !== null){ //checks to see if client is authenticated
 
-            // Get a database reference to our posts
+            // Get a database reference to user node in DB
             var ref = new Firebase("https://i-was-here.firebaseio.com/users/" + user);
 
-            // Attach an asynchronous callback to read the data at our posts reference
+            // Attach an asynchronous callback to read the data from user node in DB
             ref.on("value", function(snapshot) {
               // console.log(snapshot.val());
               // console.log(user);
@@ -59,10 +58,35 @@ $(document).on('ready', function(){
               console.log("The read failed: " + errorObject.code);
             });
         }else{
+            //if user is not logged in redirect to home page
             window.location.replace("index.html");  
         }
 
     }
+
+    $('#storySubmit').on('click', function(){
+
+        if(authData !== null){ //checks to see if client is authenticated
+
+            //retrieve values from input fields and trims leading white space
+            var storyTitle = $('#storyTitle').val().trim();
+            var storyImage = $('#storyImage').val().trim();
+            var storyBody = $('#storyBody').val().trim();
+
+            //add story to specific user node in DB
+            var userStoryRef = dataRef.child("users");
+
+            userStoryRef.child(user).push({
+                story: {
+                  title: storyTitle,
+                  image: storyImage,
+                  body: storyBody
+                }
+            });
+        }
+        // Don't refresh the page!
+        return false;
+    });
 
 	$('#search').on('focus', function(){
 		$('.search-cover').addClass('no-height');
@@ -127,10 +151,10 @@ $(document).on('ready', function(){
       dataRef.authWithPassword({
       email    : loginEmail,
       password : loginPass
-            }, function(error, authData) {
-              if (error) {
+            }, function(error, authData){
+              if(error){
                 console.log("Login Failed!", error);
-              } else {
+              }else{
                 console.log("Authenticated successfully with payload:", authData);
                 remember: "sessionOnly" //User is only logged in for the life of the page
                 user = authData.uid;
@@ -144,7 +168,7 @@ $(document).on('ready', function(){
   });
 
   //Listens for SignUp Submit Button Click
-  $("#signSubmit").on("click", function() {
+  $("#signSubmit").on("click", function(){
 
     //retrieve values from input fields and trims leading white space
     var signName = $('#signName').val().trim();
@@ -155,10 +179,10 @@ $(document).on('ready', function(){
       dataRef.createUser({
       email    : signEmail,
       password : signPass
-            }, function(error, userData) {
-              if (error) {
+            }, function(error, userData){
+              if(error){
                 console.log("Error creating user:", error);
-              } else {
+              }else{
                 console.log("Successfully created user account with uid:", userData.uid);
                 // Insert UID and Username into users node in DB
                 var usersRef = dataRef.child("users");
@@ -175,10 +199,9 @@ $(document).on('ready', function(){
   $("#logout-button").on("click", function() {
 
     // Unauthenticate the client
-        dataRef.unauth();
-        window.location.replace("index.html");
-        // Hide Logout button and show Login button
-        //$("#logout-button, #login-button, #user-button").toggleClass('hide show');
+    dataRef.unauth();
+    // redirect user to home page
+    window.location.replace("index.html");
 
   });
 

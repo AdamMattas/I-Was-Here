@@ -57,6 +57,10 @@ h3{
   border-left: 70px solid #ffffff;
 }
 
+.relative{
+  position: relative;
+}
+
 .header-image{
   position: relative;
   width: 100%;
@@ -147,7 +151,7 @@ h3{
 }
 
 .inner{
-  width: 50%;
+  width: 100%;
   height: 40px;
   float: right;
 }
@@ -271,30 +275,53 @@ h3{
   border-left: 2px solid #000000; 
 }
 
-.blue{
+.home{
   background-image: url("../images/home.png");
   border: 1px solid #000000;
   border-left: 2px solid #000000;
 }
 
-.blue:hover{
+.home:hover{
   background-image: url("../images/home1.png"); 
   border: 1px solid #000000;
   border-left: 2px solid #000000;
 }
 
-.blue:active:focus{
+.home:active:focus{
   background-image: url("../images/home1.png"); 
   border: 1px solid #000000;
   border-left: 2px solid #000000; 
 }
 
-.blue:visited{
+.home:visited{
   background-image: url("../images/home1.png"); 
   border: 1px solid #000000;
   border-left: 2px solid #000000; 
 }
 
-.relative{
-  position: relative;
+.user{
+  background-image: url("../images/user-pic.png");
+  background-position: right;
+  width: auto;
+  height: 35px;
+  border: 1px solid #000000;
+  border-left: 2px solid #000000;
+}
+
+.user:hover{
+  background-image: url("../images/user-pic1.png");
+  border: 1px solid #000000;
+  border-left: 2px solid #000000;
+}
+
+.user:active:focus{
+  background-image: url("../images/user-pic1.png"); 
+  border: 1px solid #000000;
+  border-left: 2px solid #000000; 
+}
+
+.user:visited{
+  background-image: url("../images/user-pic1.png"); 
+  border: 1px solid #000000;
+  border-left: 2px solid #000000; 
 }
