@@ -1,15 +1,66 @@
 $(document).on('ready', function(){
 
+    var user = "";
+    var userName = "";
     // Firebase link
     var dataRef = new Firebase("https://i-was-here.firebaseio.com/");
     // Initial Values
     var authData = dataRef.getAuth();
-    
-    if(authData !== null){ //checks to see if client is authenticated
 
-        //hide login-button and show logout-button if client is authenticated
-        $("#login-button").addClass('hide').removeClass('show');
-        $("#logout-button").addClass('show').removeClass('hide');
+    checkLogin();
+    
+    function checkLogin(){
+        if(authData !== null){ //checks to see if client is authenticated
+
+            user = authData.uid;
+
+            // Get a database reference to our posts
+            var ref = new Firebase("https://i-was-here.firebaseio.com/users/" + user);
+
+            // Attach an asynchronous callback to read the data at our posts reference
+            ref.on("value", function(snapshot) {
+              console.log(snapshot.val());
+              console.log(user);
+              console.log(snapshot.val().username);
+              userName = snapshot.val().username;
+
+              var userBtn = $('<a>').text(userName);//create a <a> with a textnode of the username
+                userBtn.addClass('btn btn-primary blue');
+                userBtn.attr('href', 'user.html');//added href attribute
+
+                $('#nav-logged').prepend(userBtn);//prepends entire image div to image-area div
+            }, function (errorObject) {
+              console.log("The read failed: " + errorObject.code);
+            });
+
+            //hide login-button and show logout-button if client is authenticated
+            $("#login-button").addClass('hide').removeClass('show');
+            $("#logout-button").addClass('show').removeClass('hide');
+            // $("#user-button").addClass('show').removeClass('hide');
+            // $("#user-button").text(userName);
+
+        }
+    }
+
+    //check if current page is user.html
+    if(window.location.href === "file:///C:/Users/midwe/Desktop/Bootcamp/team_projects/I-Was-Here/user.html") {
+        //check if user is logged in
+        if(authData !== null){ //checks to see if client is authenticated
+
+            // Get a database reference to our posts
+            var ref = new Firebase("https://i-was-here.firebaseio.com/users/" + user);
+
+            // Attach an asynchronous callback to read the data at our posts reference
+            ref.on("value", function(snapshot) {
+              // console.log(snapshot.val());
+              // console.log(user);
+              // console.log(snapshot.val().username);
+            }, function (errorObject) {
+              console.log("The read failed: " + errorObject.code);
+            });
+        }else{
+            window.location.replace("index.html");  
+        }
 
     }
 
@@ -82,8 +133,10 @@ $(document).on('ready', function(){
               } else {
                 console.log("Authenticated successfully with payload:", authData);
                 remember: "sessionOnly" //User is only logged in for the life of the page
-                //Hide the Login Panel, Login Button and show Logout Button after successful login
+                user = authData.uid;
+                //Login Button and show Logout Button after successful login
                 $("#logout-button, #login-button").toggleClass('hide show');
+                checkLogin();
               }
         });
       // Don't refresh the page!
@@ -94,6 +147,7 @@ $(document).on('ready', function(){
   $("#signSubmit").on("click", function() {
 
     //retrieve values from input fields and trims leading white space
+    var signName = $('#signName').val().trim();
     var signEmail = $('#signEmail').val().trim();
     var signPass = $('#signPass').val().trim();
 
@@ -106,6 +160,11 @@ $(document).on('ready', function(){
                 console.log("Error creating user:", error);
               } else {
                 console.log("Successfully created user account with uid:", userData.uid);
+                // Insert UID and Username into users node in DB
+                var usersRef = dataRef.child("users");
+                usersRef.child(userData.uid).set({
+                  username: signName
+                });
               }
             });
       // Don't refresh the page!
@@ -117,8 +176,9 @@ $(document).on('ready', function(){
 
     // Unauthenticate the client
         dataRef.unauth();
+        window.location.replace("index.html");
         // Hide Logout button and show Login button
-        $("#logout-button, #login-button").toggleClass('hide show');
+        //$("#logout-button, #login-button, #user-button").toggleClass('hide show');
 
   });
 
