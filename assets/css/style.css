@@ -120,13 +120,13 @@ h3{
   right: 0px;
   width: 90px;
   height: 85px;
-  background-image: url("../images/logout1.png");
+  background-image: url("../images/logout2.png");
   cursor: pointer;
   z-index: 100;
 }
 
 .logout:hover{
-  background-image: url("../images/logout2.png");
+  background-image: url("../images/logout1.png");
 }
 
 .world{
@@ -229,6 +229,7 @@ h3{
 
 .black{
   background-color: #000000;
+  border: 1px solid #000000;
 }
 
 .black:hover{
@@ -248,40 +249,50 @@ h3{
 
 .about{
   background-image: url("../images/about.png");
+  border: 1px solid #000000;
+  border-left: 2px solid #000000;
 }
 
 .about:hover{
   background-image: url("../images/about1.png"); 
-  border: 1px solid #000000; 
+  border: 1px solid #000000;
+  border-left: 2px solid #000000;
 }
 
 .about:active:focus{
   background-image: url("../images/about1.png"); 
-  border: 1px solid #000000;  
+  border: 1px solid #000000;
+  border-left: 2px solid #000000;
 }
 
 .about:visited{
   background-image: url("../images/about1.png"); 
-  border: 1px solid #000000;  
+  border: 1px solid #000000;
+  border-left: 2px solid #000000; 
 }
 
 .blue{
   background-image: url("../images/home.png");
+  border: 1px solid #000000;
+  border-left: 2px solid #000000;
 }
 
 .blue:hover{
   background-image: url("../images/home1.png"); 
-  border: 1px solid #000000; 
+  border: 1px solid #000000;
+  border-left: 2px solid #000000;
 }
 
 .blue:active:focus{
   background-image: url("../images/home1.png"); 
-  border: 1px solid #000000;  
+  border: 1px solid #000000;
+  border-left: 2px solid #000000; 
 }
 
 .blue:visited{
   background-image: url("../images/home1.png"); 
-  border: 1px solid #000000;  
+  border: 1px solid #000000;
+  border-left: 2px solid #000000; 
 }
 
 .relative{
