@@ -49,12 +49,14 @@ $(document).on('ready', function(){
             // Get a database reference to user node in DB
             var ref = new Firebase("https://i-was-here.firebaseio.com/users/" + user);
 
-            ref.on("child_added", function(snapshot){
-
-                console.log(snapshot);
-                console.log(snapshot.key());
-
-            })
+            // Attach an asynchronous callback to read the data from user node in DB
+            ref.on("value", function(snapshot) {
+              // console.log(snapshot.val());
+              // console.log(user);
+              // console.log(snapshot.val().username);
+            }, function (errorObject) {
+              console.log("The read failed: " + errorObject.code);
+            });
         }else{
             //if user is not logged in redirect to home page
             window.location.replace("index.html");  
