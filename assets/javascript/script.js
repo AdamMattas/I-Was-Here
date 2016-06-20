@@ -1,5 +1,93 @@
 $(document).on('ready', function(){
 
+    // Initial Values
+    var user = "";
+    var userName = "";
+    // Firebase link
+    var dataRef = new Firebase("https://i-was-here.firebaseio.com/");
+    
+    var authData = dataRef.getAuth();
+
+    checkLogin();
+    
+    function checkLogin(){
+        if(authData !== null){ //checks to see if client is authenticated
+
+            user = authData.uid;
+
+            // Get a database reference to our posts
+            var ref = new Firebase("https://i-was-here.firebaseio.com/users/" + user);
+
+            // Attach an asynchronous callback to read the data at our posts reference
+            ref.on("value", function(snapshot) {
+              console.log(snapshot.val());
+              console.log(user);
+              console.log(snapshot.val().username);
+              userName = snapshot.val().username;
+
+              var userBtn = $('<a>').text(userName); //create a <a> with a textnode of the username
+                userBtn.addClass('btn btn-primary user'); //added classes for link
+                userBtn.attr('href', 'user.html'); //added href attribute
+
+                $('#nav-logged').prepend(userBtn);//prepends image to navigation bar
+            }, function (errorObject) {
+              console.log("The read failed: " + errorObject.code);
+            });
+
+            //hide login-button and show logout-button if client is authenticated
+            $("#login-button").addClass('hide').removeClass('show');
+            $("#logout-button").addClass('show').removeClass('hide');
+
+        }
+    }
+
+    //check if current page is user.html
+    if(window.location.href === "file:///C:/Users/midwe/Desktop/Bootcamp/team_projects/I-Was-Here/user.html") {
+        //check if user is logged in
+        if(authData !== null){ //checks to see if client is authenticated
+
+            // Get a database reference to user node in DB
+            var ref = new Firebase("https://i-was-here.firebaseio.com/users/" + user);
+
+            // Attach an asynchronous callback to read the data from user node in DB
+            ref.on("value", function(snapshot) {
+              // console.log(snapshot.val());
+              // console.log(user);
+              // console.log(snapshot.val().username);
+            }, function (errorObject) {
+              console.log("The read failed: " + errorObject.code);
+            });
+        }else{
+            //if user is not logged in redirect to home page
+            window.location.replace("index.html");  
+        }
+
+    }
+
+    $('#storySubmit').on('click', function(){
+
+        if(authData !== null){ //checks to see if client is authenticated
+
+            //retrieve values from input fields and trims leading white space
+            var storyTitle = $('#storyTitle').val().trim();
+            var storyImage = $('#storyImage').val().trim();
+            var storyBody = $('#storyBody').val().trim();
+
+            //add story to specific user node in DB
+            var userStoryRef = dataRef.child("users");
+
+            userStoryRef.child(user).push({
+                story: {
+                  title: storyTitle,
+                  image: storyImage,
+                  body: storyBody
+                }
+            });
+        }
+        // Don't refresh the page!
+        return false;
+    });
+
 	$('#search').on('focus', function(){
 		$('.search-cover').addClass('no-height');
 	});
@@ -16,37 +104,105 @@ $(document).on('ready', function(){
 		//grabs the value from the input textfield
 		var term = $('#search').val().trim(); 
 
-    //query string for api that includes search parameter
-    var queryURL = "https://maps.googleapis.com/maps/api/place/textsearch/json?query="+ term +"&key=AIzaSyC-OI8taHVJIYUQuUFM2zqo3gigV0O5QiU";
+        //query string for api that includes search parameter
+        var queryURL = "https://crossorigin.me/https://maps.googleapis.com/maps/api/place/textsearch/json?query="+ term +"&key=AIzaSyC-OI8taHVJIYUQuUFM2zqo3gigV0O5QiU";
 
-    //ajax makes request and returns the response
-    $.ajax({url: queryURL, method: 'GET'}).done(function(response) {
+        //ajax makes request and returns the response
+        $.ajax({url: queryURL, method: 'GET'}).done(function(response) {
 
-         var results1 = response.data;
+        	console.log(response.results);
 
-         for(var i=0; i < results1.length; i++){
+             var locationData = response.results;
 
-             var newDiv = $('<div class="item">')//creates a div
+             for(var i=0; i < locationData.length; i++){
 
-             // var rating = results[i].rating;//grabs the rating from response
+                 var newDiv = $('<div class="item">')//creates a div
 
-             //var rate = $('<p>').text("Rating: " + rating);//create a <p> with a textnode of the rating
+                 // var rating = results[i].rating;//grabs the rating from response
 
-             var testRef = $('<p>');//creates a new image element
-             testRef.text(results1[i].results.reference);//added still src attribute
-             //newsImage.text('data-animate', results[i].images.fixed_height.url);//stores animated img url in data-
-             //newsImage.attr('data-still', results[i].images.fixed_height_still.url);//stores still img url in data-
-             //newsImage.attr('data-state', 'still');//added data attribute
-             //newsImage.addClass('image');//added class to the image
+                 //var rate = $('<p>').text("Rating: " + rating);//create a <p> with a textnode of the rating
 
-             //newDiv.append(rate)//appends the rating to the div
-             newDiv.append(testRef)//appends the image to the div
+                 var testRef = $('<img>');//creates a new image element
+                 testRef.attr('src', locationData[i].photos);
+                 //testRef.text(locationData[i].photos);//added still src attribute
+                 //newsImage.text('data-animate', results[i].images.fixed_height.url);//stores animated img url in data-
+                 //newsImage.attr('data-still', results[i].images.fixed_height_still.url);//stores still img url in data-
+                 //newsImage.attr('data-state', 'still');//added data attribute
+                 //newsImage.addClass('image');//added class to the image
 
-             $('#main-content').prepend(newDiv);//prepends entire image div to image-area div
+                 //newDiv.append(rate)//appends the rating to the div
+                 newDiv.append(testRef)//appends the image to the div
 
-         }
-        
-    }); 
-});
+                 $('#main-content').prepend(newDiv);//prepends entire image div to image-area div
+
+             }
+            
+        }); 
+    });
+
+    //Listens for Login Submit Button Click
+  $("#loginSubmit").on("click", function() {
+
+    //retrieve values from input fields and trims leading white space
+    var loginEmail = $('#loginEmail').val().trim();
+    var loginPass = $('#loginPass').val().trim();
+
+    //Checks Firebase users against submitted login credentials
+      dataRef.authWithPassword({
+      email    : loginEmail,
+      password : loginPass
+            }, function(error, authData){
+              if(error){
+                console.log("Login Failed!", error);
+              }else{
+                console.log("Authenticated successfully with payload:", authData);
+                remember: "sessionOnly" //User is only logged in for the life of the page
+                user = authData.uid;
+                //Login Button and show Logout Button after successful login
+                $("#logout-button, #login-button").toggleClass('hide show');
+                checkLogin();
+              }
+        });
+      // Don't refresh the page!
+    return false;
+  });
+
+  //Listens for SignUp Submit Button Click
+  $("#signSubmit").on("click", function(){
+
+    //retrieve values from input fields and trims leading white space
+    var signName = $('#signName').val().trim();
+    var signEmail = $('#signEmail').val().trim();
+    var signPass = $('#signPass').val().trim();
+
+    //Creates a new user in Firebase with submitted credentials
+      dataRef.createUser({
+      email    : signEmail,
+      password : signPass
+            }, function(error, userData){
+              if(error){
+                console.log("Error creating user:", error);
+              }else{
+                console.log("Successfully created user account with uid:", userData.uid);
+                // Insert UID and Username into users node in DB
+                var usersRef = dataRef.child("users");
+                usersRef.child(userData.uid).set({
+                  username: signName
+                });
+              }
+            });
+      // Don't refresh the page!
+    return false;
+  });
+
+  //Listens for Logout Button Click
+  $("#logout-button").on("click", function() {
+
+    // Unauthenticate the client
+    dataRef.unauth();
+    // redirect user to home page
+    window.location.replace("index.html");
+
+  });
 
 });
