@@ -1,9 +1,12 @@
+var storyId = "";
 $(document).on('ready', function(){
 
     // Initial Values
     var user = "";
     var userName = "";
     var keyId = "";
+    
+    
     // Firebase link
     var dataRef = new Firebase("https://i-was-here.firebaseio.com/");
     
@@ -53,7 +56,7 @@ $(document).on('ready', function(){
             // Attach an asynchronous callback to read the data from user node in DB
             ref.on("child_added", function(snapshot){
               console.log(snapshot.val());
-              console.log(snapshot.val().story);
+              console.log(snapshot.val().story.key);
               console.log(snapshot.key());
 
               var storyDiv = $('<div class="panel panel-primary">'); //creates a div with class
@@ -93,6 +96,7 @@ $(document).on('ready', function(){
 
               var readBtn = $('<button>'); //creates a button element
               readBtn.attr('data-id', snapshot.key()); //added data attribute that points to exact DB node
+              readBtn.attr('data-name', user); //added data attribute that points to exact DB node
               readBtn.addClass('story-read'); //adds class to button
               readBtn.text('View Entire Post'); //added button text
               readBtn.addClass('read-btn'); //added class to button
@@ -113,7 +117,7 @@ $(document).on('ready', function(){
             });
         }else{
             //if user is not logged in redirect to home page
-            window.location.replace("index.html");  
+            window.location.assign("index.html");  
         }
 
     }
@@ -141,6 +145,20 @@ $(document).on('ready', function(){
         }
         // Don't refresh the page!
         return false;
+    });
+
+    //Listens for Remove Story Button Click
+    $(document).on('click', '.story-read', function(){
+
+        //Grabs firebase child key stored in the button's data-id attribute
+        storyId = $(this).attr('data-id');
+
+        window.location.assign("story.html?id=" + storyId + "&name=" + user);
+
+        console.log(storyId);
+        //Removes child with corresponding key from firebase
+        //ref.child(keyId).remove();
+
     });
 
     //Listens for Remove Story Button Click
