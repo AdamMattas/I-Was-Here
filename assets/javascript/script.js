@@ -3,10 +3,11 @@ $(document).on('ready', function(){
     // Initial Values
     var user = "";
     var userName = "";
+    var keyId = "";
     // Firebase link
     var dataRef = new Firebase("https://i-was-here.firebaseio.com/");
     
-    var authData = dataRef.getAuth();
+    var authData = dataRef.getAuth(); //retrieves auth from firebase
 
     checkLogin();
     
@@ -50,12 +51,44 @@ $(document).on('ready', function(){
             var ref = new Firebase("https://i-was-here.firebaseio.com/users/" + user);
 
             // Attach an asynchronous callback to read the data from user node in DB
-            ref.on("value", function(snapshot) {
-              // console.log(snapshot.val());
-              // console.log(user);
-              // console.log(snapshot.val().username);
-            }, function (errorObject) {
-              console.log("The read failed: " + errorObject.code);
+            ref.on("child_added", function(snapshot){
+              console.log(snapshot.val());
+              console.log(snapshot.val().story);
+              console.log(snapshot.key());
+
+              var storyDiv = $('<div class="story">');//creates a div
+              storyDiv.attr('data-id', snapshot.key());
+
+              var storyImage = $('<img>');//creates a new image element
+              storyImage.attr('src', snapshot.val().story.image);//added still src attribute
+              storyImage.addClass('story-image');
+
+              var storyTitle = $('<h2>');//creates a heading
+              storyTitle.addClass('story-title');
+              storyTitle.text(snapshot.val().story.title);
+
+              var storyBody = $('<p>');//creates a paragraph
+              storyBody.text(snapshot.val().story.body);
+
+              var editBtn = $('<button>');
+              editBtn.attr('data-id', snapshot.key());
+              editBtn.attr('data-key', snapshot.val());
+              editBtn.text('Edit Story');
+              editBtn.addClass('edit-btn');
+
+              var deleteBtn = $('<button>');
+              deleteBtn.attr('data-id', snapshot.key());
+              deleteBtn.text('Remove Story');
+              deleteBtn.addClass('delete-btn');
+
+              storyDiv.append(storyImage)//appends the image to the div
+              storyDiv.append(storyTitle)//appends the image to the div
+              storyDiv.append(storyBody)//appends the image to the div
+              storyDiv.append(editBtn)//appends the image to the div
+              storyDiv.append(deleteBtn)//appends the image to the div
+
+              $('#main-content').prepend(storyDiv);//prepends entire image div to image-area div
+
             });
         }else{
             //if user is not logged in redirect to home page
@@ -86,6 +119,18 @@ $(document).on('ready', function(){
         }
         // Don't refresh the page!
         return false;
+    });
+
+    //Listens for Remove Story Button Click
+    $(document).on('click', '.delete-btn', function(){
+
+        var ref = new Firebase("https://i-was-here.firebaseio.com/users/" + user);
+        //Grabs firebase child key stored in the button's data-id attribute
+        keyId = $(this).attr('data-id');
+        console.log(keyId);
+        //Removes child with corresponding key from firebase
+        ref.child(keyId).remove();
+
     });
 
 	$('#search').on('focus', function(){
@@ -123,7 +168,7 @@ $(document).on('ready', function(){
                  //var rate = $('<p>').text("Rating: " + rating);//create a <p> with a textnode of the rating
 
                  var testRef = $('<img>');//creates a new image element
-                 testRef.attr('src', locationData[i].photos);
+                 // testRef.attr('src', locationData[i].photos);
                  //testRef.text(locationData[i].photos);//added still src attribute
                  //newsImage.text('data-animate', results[i].images.fixed_height.url);//stores animated img url in data-
                  //newsImage.attr('data-still', results[i].images.fixed_height_still.url);//stores still img url in data-
