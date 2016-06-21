@@ -56,30 +56,30 @@ $(document).on('ready', function(){
               console.log(snapshot.val().story);
               console.log(snapshot.key());
 
-              var storyDiv = $('<div class="story">');//creates a div
-              storyDiv.attr('data-id', snapshot.key());
+              var storyDiv = $('<div class="story">'); //creates a div with class
+              storyDiv.attr('data-id', snapshot.key()); //added data attribute to storyDiv
 
-              var storyImage = $('<img>');//creates a new image element
-              storyImage.attr('src', snapshot.val().story.image);//added still src attribute
-              storyImage.addClass('story-image');
+              var storyImage = $('<img>'); //creates a new image element
+              storyImage.attr('src', snapshot.val().story.image); //added src attribut from DB
+              storyImage.addClass('story-image'); //added class to image
 
-              var storyTitle = $('<h2>');//creates a heading
-              storyTitle.addClass('story-title');
-              storyTitle.text(snapshot.val().story.title);
+              var storyTitle = $('<h2>'); //creates a h2 element
+              storyTitle.addClass('story-title'); //adds class to h2
+              storyTitle.text(snapshot.val().story.title); //adds text from DB title
 
-              var storyBody = $('<p>');//creates a paragraph
-              storyBody.text(snapshot.val().story.body);
+              var storyBody = $('<p>'); //creates a paragraph
+              storyBody.text(snapshot.val().story.body); //adds text from DB body
 
-              var editBtn = $('<button>');
-              editBtn.attr('data-id', snapshot.key());
-              editBtn.attr('data-key', snapshot.val());
-              editBtn.text('Edit Story');
-              editBtn.addClass('edit-btn');
+              var editBtn = $('<button>'); //creates a button element
+              editBtn.attr('data-id', snapshot.key()); //added data attribute that points to exact DB node
+              editBtn.attr('data-key', snapshot.val()); //added data attribute NOT RIGHT YET
+              editBtn.text('Edit Story'); //added button text
+              editBtn.addClass('edit-btn'); //added class to button
 
-              var deleteBtn = $('<button>');
-              deleteBtn.attr('data-id', snapshot.key());
-              deleteBtn.text('Remove Story');
-              deleteBtn.addClass('delete-btn');
+              var deleteBtn = $('<button>'); //creates a button element
+              deleteBtn.attr('data-id', snapshot.key()); //added data attribute that points to exact DB node
+              deleteBtn.text('Remove Story'); //added button text
+              deleteBtn.addClass('delete-btn'); //added class to button
 
               storyDiv.append(storyImage)//appends the image to the div
               storyDiv.append(storyTitle)//appends the image to the div
@@ -87,7 +87,7 @@ $(document).on('ready', function(){
               storyDiv.append(editBtn)//appends the image to the div
               storyDiv.append(deleteBtn)//appends the image to the div
 
-              $('#main-content').prepend(storyDiv);//prepends entire image div to image-area div
+              $('#main-content').prepend(storyDiv);//prepends entire story div to main-content div
 
             });
         }else{
@@ -106,9 +106,10 @@ $(document).on('ready', function(){
             var storyImage = $('#storyImage').val().trim();
             var storyBody = $('#storyBody').val().trim();
 
-            //add story to specific user node in DB
+            //targets child node in Firebase DB
             var userStoryRef = dataRef.child("users");
 
+            //add story to specific user node in DB
             userStoryRef.child(user).push({
                 story: {
                   title: storyTitle,
@@ -124,6 +125,7 @@ $(document).on('ready', function(){
     //Listens for Remove Story Button Click
     $(document).on('click', '.delete-btn', function(){
 
+        //targets specific user node in Firebase DB
         var ref = new Firebase("https://i-was-here.firebaseio.com/users/" + user);
         //Grabs firebase child key stored in the button's data-id attribute
         keyId = $(this).attr('data-id');
@@ -133,14 +135,17 @@ $(document).on('ready', function(){
 
     });
 
+    //listens for input click on search bar
 	$('#search').on('focus', function(){
 		$('.search-cover').addClass('no-height');
 	});
 
+    //listens for click outside of search bar
 	$('#search').on('blur', function(){
 		$('.search-cover').removeClass('no-height');
 	});
 
+    //submits search request
 	$(document).on('click', '#search-submit', function(){
 
 		$("#main-content").empty();
