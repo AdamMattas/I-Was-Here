@@ -154,6 +154,7 @@ h3{
   width: 100%;
   height: 40px;
   float: right;
+  margin-bottom: 75px;
 }
 
 .btn-primary{
@@ -324,4 +325,27 @@ h3{
   background-image: url("../images/user-pic1.png"); 
   border: 1px solid #000000;
   border-left: 2px solid #000000; 
+}
+
+.story{
+  position: relative;
+  width: 90%;
+  height: 200px;
+  border: 1px solid #000000;
+  margin: 0 auto;
+  margin-bottom: 25px;
+  padding: 15px;
+}
+
+.story-image{
+  /*position: absolute;*/
+  float: left;
+  height: 150px;
+  width: 150px;
+  margin-right: 15px;
+}
+
+.story-title{
+  /*float: left;*/
+  margin-top: 0px;
 }
