@@ -330,22 +330,48 @@ h3{
 .story{
   position: relative;
   width: 90%;
-  height: 200px;
+  min-height: 200px;
+  height: auto;
   border: 1px solid #000000;
   margin: 0 auto;
   margin-bottom: 25px;
   padding: 15px;
+  overflow: auto;
 }
 
 .story-image{
   /*position: absolute;*/
   float: left;
-  height: 150px;
-  width: 150px;
+  max-height: 170px;
+  height: auto;
+  width: 200px;
   margin-right: 15px;
 }
 
 .story-title{
   /*float: left;*/
   margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.story-body{
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+}
+
+.story-read{
+  position: relative;
+  float: right;
+}
+
+.story-edit{
+  position: relative;
+  float: right;
+  margin-left: 15px;
+}
+
+.story-delete{
+  position: relative;
+  float: right;
+  margin-left: 15px;
 }

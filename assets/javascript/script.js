@@ -36,8 +36,8 @@ $(document).on('ready', function(){
             });
 
             //hide login-button and show logout-button if client is authenticated
-            $("#login-button").addClass('hide').removeClass('show');
-            $("#logout-button").addClass('show').removeClass('hide');
+            $('#login-button').addClass('hide').removeClass('show');
+            $('#logout-button').addClass('show').removeClass('hide');
 
         }
     }
@@ -56,8 +56,13 @@ $(document).on('ready', function(){
               console.log(snapshot.val().story);
               console.log(snapshot.key());
 
-              var storyDiv = $('<div class="story">'); //creates a div with class
-              storyDiv.attr('data-id', snapshot.key()); //added data attribute to storyDiv
+              var storyDiv = $('<div class="panel panel-primary">'); //creates a div with class
+
+              var storyDivHead = $('<div class="panel-heading">'); //creates a div with class
+
+              var storyDivTitle = $('<div class="panel-title">'); //creates a div with class
+
+              var storyDivBody = $('<div class="panel-body">'); //creates a div with class
 
               var storyImage = $('<img>'); //creates a new image element
               storyImage.attr('src', snapshot.val().story.image); //added src attribut from DB
@@ -67,25 +72,41 @@ $(document).on('ready', function(){
               storyTitle.addClass('story-title'); //adds class to h2
               storyTitle.text(snapshot.val().story.title); //adds text from DB title
 
+              var str = snapshot.val().story.body;
+              if(str.length > 900) str = str.substring(0,900);
               var storyBody = $('<p>'); //creates a paragraph
-              storyBody.text(snapshot.val().story.body); //adds text from DB body
+              storyBody.text(str); //adds text from DB body
+              storyBody.addClass('story-body'); //added class to button
+              
+              var deleteBtn = $('<button>'); //creates a button element
+              deleteBtn.attr('data-id', snapshot.key()); //added data attribute that points to exact DB node
+              deleteBtn.addClass('story-delete'); //adds class to button
+              deleteBtn.text('Remove Post'); //added button text
+              deleteBtn.addClass('delete-btn'); //added class to button
 
               var editBtn = $('<button>'); //creates a button element
               editBtn.attr('data-id', snapshot.key()); //added data attribute that points to exact DB node
               editBtn.attr('data-key', snapshot.val()); //added data attribute NOT RIGHT YET
-              editBtn.text('Edit Story'); //added button text
+              editBtn.addClass('story-edit'); //adds class to button
+              editBtn.text('Edit Post'); //added button text
               editBtn.addClass('edit-btn'); //added class to button
 
-              var deleteBtn = $('<button>'); //creates a button element
-              deleteBtn.attr('data-id', snapshot.key()); //added data attribute that points to exact DB node
-              deleteBtn.text('Remove Story'); //added button text
-              deleteBtn.addClass('delete-btn'); //added class to button
+              var readBtn = $('<button>'); //creates a button element
+              readBtn.attr('data-id', snapshot.key()); //added data attribute that points to exact DB node
+              readBtn.addClass('story-read'); //adds class to button
+              readBtn.text('View Entire Post'); //added button text
+              readBtn.addClass('read-btn'); //added class to button
 
-              storyDiv.append(storyImage)//appends the image to the div
-              storyDiv.append(storyTitle)//appends the image to the div
-              storyDiv.append(storyBody)//appends the image to the div
-              storyDiv.append(editBtn)//appends the image to the div
-              storyDiv.append(deleteBtn)//appends the image to the div
+              storyDivBody.append(storyImage)//appends the image to the div
+              storyDivTitle.append(storyTitle)//appends the image to the div
+              storyDivBody.append(storyBody)//appends the image to the div
+              storyDivBody.append(deleteBtn)//appends the image to the div
+              storyDivBody.append(editBtn)//appends the image to the div
+              storyDivBody.append(readBtn)//appends the image to the div
+
+              storyDiv.append(storyDivHead)//appends the image to the div
+              storyDiv.append(storyDivBody)//appends the image to the div
+              storyDivHead.append(storyDivTitle)//appends the image to the div
 
               $('#main-content').prepend(storyDiv);//prepends entire story div to main-content div
 
@@ -210,7 +231,6 @@ $(document).on('ready', function(){
                 user = authData.uid;
                 //Login Button and show Logout Button after successful login
                 $("#logout-button, #login-button").toggleClass('hide show');
-                checkLogin();
               }
         });
       // Don't refresh the page!
