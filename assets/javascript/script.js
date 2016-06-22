@@ -75,7 +75,10 @@ $(document).on('ready', function(){
               storyTitle.addClass('story-title'); //adds class to h2
               storyTitle.text(snapshot.val().story.title); //adds text from DB title
 
+              
+
               var str = snapshot.val().story.body;
+              //str = str.replace(/(?:\r\n|\r|\n)/g, '<br />');
               if(str.length > 900) str = str.substring(0,900);
               var storyBody = $('<p>'); //creates a paragraph
               storyBody.text(str); //adds text from DB body
@@ -193,41 +196,35 @@ $(document).on('ready', function(){
 		//grabs the value from the input textfield
 		var term = $('#search').val().trim(); 
 
+        var searchPic = "";
         //query string for api that includes search parameter
         var queryURL = "https://crossorigin.me/https://maps.googleapis.com/maps/api/place/textsearch/json?query="+ term +"&key=AIzaSyC-OI8taHVJIYUQuUFM2zqo3gigV0O5QiU";
 
         //ajax makes request and returns the response
         $.ajax({url: queryURL, method: 'GET'}).done(function(response) {
 
-        	console.log(response.results);
+        	console.log(response.results[0].photos[0].photo_reference);
 
-             var locationData = response.results;
+            //var locationData = response.results;
 
-             for(var i=0; i < locationData.length; i++){
-
-                 var newDiv = $('<div class="item">')//creates a div
-
-                 // var rating = results[i].rating;//grabs the rating from response
-
-                 //var rate = $('<p>').text("Rating: " + rating);//create a <p> with a textnode of the rating
-
-                 var testRef = $('<img>');//creates a new image element
-                 // testRef.attr('src', locationData[i].photos);
-                 //testRef.text(locationData[i].photos);//added still src attribute
-                 //newsImage.text('data-animate', results[i].images.fixed_height.url);//stores animated img url in data-
-                 //newsImage.attr('data-still', results[i].images.fixed_height_still.url);//stores still img url in data-
-                 //newsImage.attr('data-state', 'still');//added data attribute
-                 //newsImage.addClass('image');//added class to the image
-
-                 //newDiv.append(rate)//appends the rating to the div
-                 newDiv.append(testRef)//appends the image to the div
-
-                 $('#main-content').prepend(newDiv);//prepends entire image div to image-area div
-
-             }
+            searchPic = response.results[0].photos[0].photo_reference;
+            query2(searchPic);
             
-        }); 
+        });
+
     });
+
+    function query2(search){
+
+        var queryPic = "https://crossorigin.me/https://maps/api/place/photo?maxwidth=400&photoreference="+ search +"&key=AIzaSyCfWQ61zboximEKVxwXKydldfeti6co9ag";
+
+        $.ajax({url: queryPic, method: 'GET'}).done(function(picResponse) {
+
+        console.log(picResponse.results);
+        
+        });
+
+    }
 
     //Listens for Login Submit Button Click
   $("#loginSubmit").on("click", function() {
