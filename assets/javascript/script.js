@@ -35,7 +35,7 @@ $(document).on('ready', function(){
 
         //var web = "http://www.wunderground.com/US/NY/Brooklyn.html";
 
-        var weatherDiv = $('<div>');
+        /*var weatherDiv = $('<div>');
 
         var frame = $('<iframe>');
 
@@ -46,7 +46,7 @@ $(document).on('ready', function(){
         weatherDiv.append(frame);
 
         $('#main-content').prepend(weatherDiv);
-
+        */
 
 
         //$('.weather').load(web);
