@@ -78,8 +78,8 @@ $(document).on('ready', function(){
               
 
               var str = snapshot.val().story.body;
-              //str = str.replace(/(?:\r\n|\r|\n)/g, '<br />');
               if(str.length > 900) str = str.substring(0,900);
+              str = (str.slice(0,-3) + '...');
               var storyBody = $('<p>'); //creates a paragraph
               storyBody.text(str); //adds text from DB body
               storyBody.addClass('story-body'); //added class to button
