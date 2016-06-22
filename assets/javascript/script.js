@@ -1,9 +1,12 @@
+var storyId = "";
 $(document).on('ready', function(){
 
     // Initial Values
     var user = "";
     var userName = "";
     var keyId = "";
+    
+    
     // Firebase link
     var dataRef = new Firebase("https://i-was-here.firebaseio.com/");
     
@@ -36,8 +39,8 @@ $(document).on('ready', function(){
             });
 
             //hide login-button and show logout-button if client is authenticated
-            $("#login-button").addClass('hide').removeClass('show');
-            $("#logout-button").addClass('show').removeClass('hide');
+            $('#login-button').addClass('hide').removeClass('show');
+            $('#logout-button').addClass('show').removeClass('hide');
 
         }
     }
@@ -53,11 +56,16 @@ $(document).on('ready', function(){
             // Attach an asynchronous callback to read the data from user node in DB
             ref.on("child_added", function(snapshot){
               console.log(snapshot.val());
-              console.log(snapshot.val().story);
+              console.log(snapshot.val().story.key);
               console.log(snapshot.key());
 
-              var storyDiv = $('<div class="story">'); //creates a div with class
-              storyDiv.attr('data-id', snapshot.key()); //added data attribute to storyDiv
+              var storyDiv = $('<div class="panel panel-primary">'); //creates a div with class
+
+              var storyDivHead = $('<div class="panel-heading">'); //creates a div with class
+
+              var storyDivTitle = $('<div class="panel-title">'); //creates a div with class
+
+              var storyDivBody = $('<div class="panel-body">'); //creates a div with class
 
               var storyImage = $('<img>'); //creates a new image element
               storyImage.attr('src', snapshot.val().story.image); //added src attribut from DB
@@ -67,32 +75,52 @@ $(document).on('ready', function(){
               storyTitle.addClass('story-title'); //adds class to h2
               storyTitle.text(snapshot.val().story.title); //adds text from DB title
 
+              
+
+              var str = snapshot.val().story.body;
+              //str = str.replace(/(?:\r\n|\r|\n)/g, '<br />');
+              if(str.length > 900) str = str.substring(0,900);
               var storyBody = $('<p>'); //creates a paragraph
-              storyBody.text(snapshot.val().story.body); //adds text from DB body
+              storyBody.text(str); //adds text from DB body
+              storyBody.addClass('story-body'); //added class to button
+              
+              var deleteBtn = $('<button>'); //creates a button element
+              deleteBtn.attr('data-id', snapshot.key()); //added data attribute that points to exact DB node
+              deleteBtn.addClass('story-delete'); //adds class to button
+              deleteBtn.text('Remove Post'); //added button text
+              deleteBtn.addClass('delete-btn'); //added class to button
 
               var editBtn = $('<button>'); //creates a button element
               editBtn.attr('data-id', snapshot.key()); //added data attribute that points to exact DB node
               editBtn.attr('data-key', snapshot.val()); //added data attribute NOT RIGHT YET
-              editBtn.text('Edit Story'); //added button text
+              editBtn.addClass('story-edit'); //adds class to button
+              editBtn.text('Edit Post'); //added button text
               editBtn.addClass('edit-btn'); //added class to button
 
-              var deleteBtn = $('<button>'); //creates a button element
-              deleteBtn.attr('data-id', snapshot.key()); //added data attribute that points to exact DB node
-              deleteBtn.text('Remove Story'); //added button text
-              deleteBtn.addClass('delete-btn'); //added class to button
+              var readBtn = $('<button>'); //creates a button element
+              readBtn.attr('data-id', snapshot.key()); //added data attribute that points to exact DB node
+              readBtn.attr('data-name', user); //added data attribute that points to exact DB node
+              readBtn.addClass('story-read'); //adds class to button
+              readBtn.text('View Entire Post'); //added button text
+              readBtn.addClass('read-btn'); //added class to button
 
-              storyDiv.append(storyImage)//appends the image to the div
-              storyDiv.append(storyTitle)//appends the image to the div
-              storyDiv.append(storyBody)//appends the image to the div
-              storyDiv.append(editBtn)//appends the image to the div
-              storyDiv.append(deleteBtn)//appends the image to the div
+              storyDivBody.append(storyImage)//appends the image to the div
+              storyDivTitle.append(storyTitle)//appends the image to the div
+              storyDivBody.append(storyBody)//appends the image to the div
+              storyDivBody.append(deleteBtn)//appends the image to the div
+              storyDivBody.append(editBtn)//appends the image to the div
+              storyDivBody.append(readBtn)//appends the image to the div
+
+              storyDiv.append(storyDivHead)//appends the image to the div
+              storyDiv.append(storyDivBody)//appends the image to the div
+              storyDivHead.append(storyDivTitle)//appends the image to the div
 
               $('#main-content').prepend(storyDiv);//prepends entire story div to main-content div
 
             });
         }else{
             //if user is not logged in redirect to home page
-            window.location.replace("index.html");  
+            window.location.assign("index.html");  
         }
 
     }
@@ -120,6 +148,20 @@ $(document).on('ready', function(){
         }
         // Don't refresh the page!
         return false;
+    });
+
+    //Listens for Remove Story Button Click
+    $(document).on('click', '.story-read', function(){
+
+        //Grabs firebase child key stored in the button's data-id attribute
+        storyId = $(this).attr('data-id');
+
+        window.location.assign("story.html?id=" + storyId + "&name=" + user);
+
+        console.log(storyId);
+        //Removes child with corresponding key from firebase
+        //ref.child(keyId).remove();
+
     });
 
     //Listens for Remove Story Button Click
@@ -154,41 +196,35 @@ $(document).on('ready', function(){
 		//grabs the value from the input textfield
 		var term = $('#search').val().trim(); 
 
+        var searchPic = "";
         //query string for api that includes search parameter
         var queryURL = "https://crossorigin.me/https://maps.googleapis.com/maps/api/place/textsearch/json?query="+ term +"&key=AIzaSyC-OI8taHVJIYUQuUFM2zqo3gigV0O5QiU";
 
         //ajax makes request and returns the response
         $.ajax({url: queryURL, method: 'GET'}).done(function(response) {
 
-        	console.log(response.results);
+        	console.log(response.results[0].photos[0].photo_reference);
 
-             var locationData = response.results;
+            //var locationData = response.results;
 
-             for(var i=0; i < locationData.length; i++){
-
-                 var newDiv = $('<div class="item">')//creates a div
-
-                 // var rating = results[i].rating;//grabs the rating from response
-
-                 //var rate = $('<p>').text("Rating: " + rating);//create a <p> with a textnode of the rating
-
-                 var testRef = $('<img>');//creates a new image element
-                 // testRef.attr('src', locationData[i].photos);
-                 //testRef.text(locationData[i].photos);//added still src attribute
-                 //newsImage.text('data-animate', results[i].images.fixed_height.url);//stores animated img url in data-
-                 //newsImage.attr('data-still', results[i].images.fixed_height_still.url);//stores still img url in data-
-                 //newsImage.attr('data-state', 'still');//added data attribute
-                 //newsImage.addClass('image');//added class to the image
-
-                 //newDiv.append(rate)//appends the rating to the div
-                 newDiv.append(testRef)//appends the image to the div
-
-                 $('#main-content').prepend(newDiv);//prepends entire image div to image-area div
-
-             }
+            searchPic = response.results[0].photos[0].photo_reference;
+            query2(searchPic);
             
-        }); 
+        });
+
     });
+
+    function query2(search){
+
+        var queryPic = "https://crossorigin.me/https://maps/api/place/photo?maxwidth=400&photoreference="+ search +"&key=AIzaSyCfWQ61zboximEKVxwXKydldfeti6co9ag";
+
+        $.ajax({url: queryPic, method: 'GET'}).done(function(picResponse) {
+
+        console.log(picResponse.results);
+        
+        });
+
+    }
 
     //Listens for Login Submit Button Click
   $("#loginSubmit").on("click", function() {
@@ -210,7 +246,6 @@ $(document).on('ready', function(){
                 user = authData.uid;
                 //Login Button and show Logout Button after successful login
                 $("#logout-button, #login-button").toggleClass('hide show');
-                checkLogin();
               }
         });
       // Don't refresh the page!
