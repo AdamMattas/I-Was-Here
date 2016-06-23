@@ -313,8 +313,24 @@ $(document).on('ready', function(){
           .done(function(response) {
             console.log(response);
           
-          var city, state, temperature, weather, time, wind, humidity;
-          city = response.current_observation.local_time_rfc822;
+          var city, state, temperature, weather, time, wind, humidity, icon;
+
+          icon = response.current_observation.icon_url;
+          console.log(icon);
+          city = response.current_observation.display_location.city;
           console.log(city);
+          state = response.current_observation.display_location.state_name;
+          console.log(state);
+          temperature = response.current_observation.temperature_string;
+          console.log(temperature);
+          weather = response.current_observation.weather;
+          console.log(weather);
+          time = response.current_observation.local_time_rfc822;
+          console.log(time);
+          wind = response.current_observation.wind_string;
+          console.log(wind);
+          humidity = response.current_observation.relative_humidity;
+
+          v
         });
     });
