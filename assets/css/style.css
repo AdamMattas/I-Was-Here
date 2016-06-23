@@ -1,3 +1,39 @@
+/*david ui*/
+.outBox{
+  border-color: #337ab7;
+  border: 1px solid;
+  border-radius: 4px;
+  width: 100%;
+  height: 400px;
+  box-sizing: border-box;
+  overflow: 0 auto;
+}
+
+.inBox{
+  border-color: #337ab7;
+  border: 1px solid;
+  width: 90%;
+  height: 100px;
+  margin-left: auto;
+  margin-right: auto;
+
+}
+
+.border{
+  border: 1px solid;
+  width: 100%;
+  height: 100px;
+}
+
+
+
+
+
+
+
+
+
+
 /*begin global styling*/
 *{
   box-sizing: border-box;
