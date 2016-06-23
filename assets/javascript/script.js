@@ -46,6 +46,7 @@ $(document).on('ready', function(){
     }
 
     //check if current page is user.html
+
     if(window.location.href === "user.html") {
         //check if user is logged in
         if(authData !== null){ //checks to see if client is authenticated
@@ -198,7 +199,7 @@ $(document).on('ready', function(){
 
         var searchPic = "";
         //query string for api that includes search parameter
-        var queryURL = "https://crossorigin.me/https://maps.googleapis.com/maps/api/place/textsearch/json?query="+ term +"&key=AIzaSyC-OI8taHVJIYUQuUFM2zqo3gigV0O5QiU";
+        var queryURL = "https://maps.googleapis.com/maps/api/place/textsearch/json?query="+ term +"&key=AIzaSyC-OI8taHVJIYUQuUFM2zqo3gigV0O5QiU";
 
         //ajax makes request and returns the response
         $.ajax({url: queryURL, method: 'GET'}).done(function(response) {
