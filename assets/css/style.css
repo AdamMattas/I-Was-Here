@@ -61,6 +61,10 @@ h3{
   position: relative;
 }
 
+.padding{
+  padding: 25px;
+}
+
 .header-image{
   position: relative;
   width: 100%;
@@ -69,9 +73,6 @@ h3{
 	background-size: cover;
 	background-position: right;
   z-index: 99;
-  /*border: 1px solid #000000;
-  border-top-right-radius: 50px;
-  border-bottom-right-radius: 50px;*/
 }
 
 .logo{
@@ -154,7 +155,12 @@ h3{
   width: 100%;
   height: 40px;
   float: right;
-  margin-bottom: 75px;
+  margin-bottom: 120px;
+}
+
+.main-content-wrapper{
+  width: 80%;
+  margin: 0 auto; 
 }
 
 .content-wrapper{
@@ -308,10 +314,11 @@ h3{
 .user{
   background-image: url("../images/user-pic.png");
   background-position: right;
-  width: auto;
+  width: 281px;
   height: 35px;
   border: 1px solid #000000;
   border-left: 2px solid #000000;
+  /*border-bottom-left-radius: 15px;*/
 }
 
 .user:hover{
@@ -330,6 +337,35 @@ h3{
   background-image: url("../images/user-pic1.png"); 
   border: 1px solid #000000;
   border-left: 2px solid #000000; 
+}
+
+.trees{
+  background-image: url("../images/trees4.png");
+  position: absolute;
+  top: 139px;
+  right: 0;
+  width: 826px;
+  height: 40px;
+  z-index: 200;
+}
+
+.trees2{
+  background-image: url("../images/trees2.png");
+  position: absolute;
+  top: 141px;
+  right: 0;
+  width: 826px;
+  height: 40px;
+  z-index: 199;
+}
+
+.panel-primary{
+  border-color: #000000;
+}
+
+.panel-primary>.panel-heading {
+  background-color: #004c86;
+  border-color: #004c86;
 }
 
 .story{
@@ -380,4 +416,13 @@ h3{
   position: relative;
   float: right;
   margin-left: 15px;
+}
+
+.footer{
+  background-image: url("../images/postcards_final.png");
+  background-size: cover;
+  width: 100%;
+  height: 150px;
+  /*opacity: 0.75;*/
+  clear: both;
 }
