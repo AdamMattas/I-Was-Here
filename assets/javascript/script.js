@@ -47,7 +47,8 @@ $(document).on('ready', function(){
 
     //check if current page is user.html
 
-    if(window.location.href === "user.html") {
+    if(window.location.href === "https://whispering-atoll-32817.herokuapp.com/user.html") {
+
         //check if user is logged in
         if(authData !== null){ //checks to see if client is authenticated
 
