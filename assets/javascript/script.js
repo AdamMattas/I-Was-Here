@@ -199,6 +199,11 @@ $(document).on('ready', function(){
 		var term = $('#search').val().trim(); 
 
         var searchPic = "";
+        var searchName = "";
+        var searchLocation = "";
+        var searchType = "";
+        var searchHours = "";
+
         //query string for api that includes search parameter
         var queryURL = "https://crossorigin.me/https://maps.googleapis.com/maps/api/place/textsearch/json?query="+ term +"&key=AIzaSyC-OI8taHVJIYUQuUFM2zqo3gigV0O5QiU";
 
@@ -211,17 +216,36 @@ $(document).on('ready', function(){
             //var locationData = response.results;
 
             searchPic = response.results[0].photos[0].photo_reference;
+            searchName = response.results[0].name;
+            searchLocation = response.results[0].formatted_address;
+            searchType = response.results[0].types;
+            //searchHours = response.results[0].opening_hours.open_now;
 
-            renderSearch(searchPic);
+            renderSearch(searchPic, searchName, searchLocation, searchType, response.results);
             
         });
 
     });
 
-    function renderSearch(search){
+    function renderSearch(search, name, location, type, wholeResponse){
 
         var queryPic = "https://crossorigin.me/https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference="+ search +"&key=AIzaSyCfWQ61zboximEKVxwXKydldfeti6co9ag";
-        $('#api-image').attr('src', queryPic)
+        $('#api-hours').empty();
+        $('#api-image').attr('src', queryPic);
+        $('#api-title').text(name);
+        $('#api-address').text(location);
+        $('#api-type').text(type);
+
+        if(wholeResponse[0].opening_hours.open_now == true){
+            hours = name + " is open now.";
+        }else if(wholeResponse[0].opening_hours.open_now == false){
+            hours = name + " is closed now.";
+        }else{
+            hours = name + " does not have hours of operation."; 
+        }
+
+        $('#api-hours').text(hours);
+
 
     }
 
