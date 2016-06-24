@@ -46,7 +46,9 @@ $(document).on('ready', function(){
     }
 
     //check if current page is user.html
-    if(window.location.href === "file:///C:/Users/midwe/Desktop/Bootcamp/team_projects/I-Was-Here/user.html") {
+
+    if(window.location.href === "https://whispering-atoll-32817.herokuapp.com/user.html") {
+
         //check if user is logged in
         if(authData !== null){ //checks to see if client is authenticated
 
@@ -208,6 +210,7 @@ $(document).on('ready', function(){
             //var locationData = response.results;
 
             searchPic = response.results[0].photos[0].photo_reference;
+            console.log("{"+searchPic+"}");
             query2(searchPic);
             
         });
@@ -216,11 +219,11 @@ $(document).on('ready', function(){
 
     function query2(search){
 
-        var queryPic = "https://maps/api/place/photo?maxwidth=400&photoreference="+ search +"&key=AIzaSyCfWQ61zboximEKVxwXKydldfeti6co9ag";
+        var queryPic = "https://crossorigin.me/https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference="+ search +"&key=AIzaSyCfWQ61zboximEKVxwXKydldfeti6co9ag";
 
         $.ajax({url: queryPic, method: 'GET'}).done(function(picResponse) {
 
-        console.log(picResponse.results);
+       // console.log(picResponse);
         
         });
 
