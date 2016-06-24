@@ -46,9 +46,7 @@ $(document).on('ready', function(){
     }
 
     //check if current page is user.html
-
-    if(window.location.href === "https://whispering-atoll-32817.herokuapp.com/user.html") {
-
+    if(window.location.href === "file:///C:/Users/midwe/Desktop/Bootcamp/team_projects/I-Was-Here/user.html") {
         //check if user is logged in
         if(authData !== null){ //checks to see if client is authenticated
 
@@ -135,6 +133,7 @@ $(document).on('ready', function(){
             var storyTitle = $('#storyTitle').val().trim();
             var storyImage = $('#storyImage').val().trim();
             var storyBody = $('#storyBody').val().trim();
+            var storyKeyword = $('#storyKeyword').val().trim();
 
             //targets child node in Firebase DB
             var userStoryRef = dataRef.child("users");
@@ -144,7 +143,8 @@ $(document).on('ready', function(){
                 story: {
                   title: storyTitle,
                   image: storyImage,
-                  body: storyBody
+                  body: storyBody,
+                  keywords: storyKeyword
                 }
             });
         }
@@ -192,7 +192,7 @@ $(document).on('ready', function(){
     //submits search request
 	$(document).on('click', '#search-submit', function(){
 
-		$("#main-content").empty();
+		//$("#main-content").empty();
 		// $("#intro-image").addClass('hide');
 
 		//grabs the value from the input textfield
@@ -200,32 +200,28 @@ $(document).on('ready', function(){
 
         var searchPic = "";
         //query string for api that includes search parameter
-        var queryURL = "https://maps.googleapis.com/maps/api/place/textsearch/json?query="+ term +"&key=AIzaSyC-OI8taHVJIYUQuUFM2zqo3gigV0O5QiU";
+        var queryURL = "https://crossorigin.me/https://maps.googleapis.com/maps/api/place/textsearch/json?query="+ term +"&key=AIzaSyC-OI8taHVJIYUQuUFM2zqo3gigV0O5QiU";
 
         //ajax makes request and returns the response
         $.ajax({url: queryURL, method: 'GET'}).done(function(response) {
 
+            console.log(response.results);
         	console.log(response.results[0].photos[0].photo_reference);
 
             //var locationData = response.results;
 
             searchPic = response.results[0].photos[0].photo_reference;
-            console.log("{"+searchPic+"}");
-            query2(searchPic);
+
+            renderSearch(searchPic);
             
         });
 
     });
 
-    function query2(search){
+    function renderSearch(search){
 
         var queryPic = "https://crossorigin.me/https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference="+ search +"&key=AIzaSyCfWQ61zboximEKVxwXKydldfeti6co9ag";
-
-        $.ajax({url: queryPic, method: 'GET'}).done(function(picResponse) {
-
-       // console.log(picResponse);
-        
-        });
+        $('#api-image').attr('src', queryPic)
 
     }
 

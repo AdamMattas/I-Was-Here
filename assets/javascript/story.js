@@ -47,7 +47,16 @@ $(document).on('ready', function(){
     storyDiv.append(storyDivBody)//appends the image to the div
     storyDivHead.append(storyDivTitle)//appends the image to the div
 
+   //  var keyDiv = $('<div class="panel panel-primary">'); //creates a div with class
+
+	  // var storyKey = $('<a>');
+   //  storyKey.text(userKeywords[0]); //adds text from DB body
+   //  storyKey.addClass('story-key');
+
+   //  keyDiv.append(storyKey)//appends the image to the div
+
     $('#main-content').prepend(storyDiv);//prepends entire story div to main-content div
+    //$('#main-content').append(keyDiv);//prepends entire story div to main-content div
       
 
     }, function (errorObject) {
