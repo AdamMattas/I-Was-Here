@@ -2,7 +2,7 @@
 
 .main{
   width: 100%;
-  height: 700px;
+  height: 400px;
   float: left;
   padding: 2rem;
 
@@ -10,16 +10,12 @@
 
 .device{
   width: 100%;
-  height: 544px;
+  height: 220px;
   border: 1px solid #2f2f2f;
   border-color: #8ba892;
   border-radius: 8px;
+  background-color: #8ba892;
   }
-  section{
-    width: 100%;
-    overflow: hidden;
-  }
-
   header{
     height: 40px;
     background-color: #8ba892;
@@ -30,44 +26,39 @@
     font-weight: bold;
     text-transform: uppercase;
     font-size: 16px;
+  }  
+  .section{
+    width: 100%;
+    overflow: auto;
+    }
+    .pic{
+      width: 50%;
+      text-align: center;
+      float: left;
+      height: 200px;
+      }
+      .icon{
+        height: 100px;
+        width: 100px;
+      }
+    }
+
+    .content{
+      float: right;
+      right: 0;
+      width: 50%;
+      color: white;
+      font-family: 'Lato', sans-serif;
+      width: 100px;
+      }
+    }
+  }
+  img{
+
   }
 }
 
-.weather{
-  overflow: hidden;
-  }
-  .color{
-    background-color: blue;
-  }
 
-  .content{
-    right: 0;
-    width: 40%;
-    position: absolute;
-    color: white;
-    font-family: 'Lato', sans-serif;
-  }
-
-  h3{
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.4);
-    margin-bottom: 0;
-    font-weight: 700;
-  }
-
-  h2{
-    font-size: 1.75rem;
-    margin-bottom: 1rem;
-    font-weight: 400;
-  }
-
-  .degrees{
-    font-size: 2rem;
-    font-weight: 300;
-    color: white;
-    line-height: 1;
-  }
-}
 
 
 

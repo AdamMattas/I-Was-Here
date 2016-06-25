@@ -330,7 +330,33 @@ $(document).on('ready', function(){
           wind = response.current_observation.wind_string;
           console.log(wind);
           humidity = response.current_observation.relative_humidity;
+          console.log(humidity);
 
-          v
+          var elIcon = document.querySelector(".icon")
+          console.log(elIcon);
+          elIcon.setAttribute('src', icon);
+
+          var elCity = document.querySelector('.city');
+          console.log(elCity);
+          elCity.innerHTML = city;
+
+          var elState = document.querySelector('.state');
+          elState.innerHTML = state;
+
+          var elTemp = document.querySelector('.degrees');
+          elTemp.innerHTML = temperature;
+
+          var elWea = document.querySelector('.weather');
+          elWea.innerHTML = weather;
+
+          var elTime = document.querySelector('.time');
+          elTime.innerHTML = time;
+
+          var elWind = document.querySelector('.wind');
+          elWind.innerHTML = wind;
+
+          var elHum = document.querySelector('.humidity');
+          elHum.innerHTML = humidity;
+           
         });
     });
