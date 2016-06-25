@@ -189,8 +189,8 @@ $(document).on('ready', function(){
 		$('.search-cover').removeClass('no-height');
 	});
 
-    //submits search request
-	$(document).on('click', '#search-submit', function(){
+    //submits search request STORY.HTML Page!!!!!
+	$(document).on('click', '#search-submit-story', function(){
 
 		//$("#main-content").empty();
 		// $("#intro-image").addClass('hide');
@@ -228,6 +228,95 @@ $(document).on('ready', function(){
     });
 
     function renderSearch(search, name, location, type, wholeResponse){
+
+        var queryPic = "https://crossorigin.me/https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference="+ search +"&key=AIzaSyCfWQ61zboximEKVxwXKydldfeti6co9ag";
+        $('#api-hours').empty();
+        $('#api-image').attr('src', queryPic);
+        $('#api-title').text(name);
+        $('#api-address').text(location);
+        $('#api-type').text(type);
+
+        $('#weather-title').text("Weather Conditions Near " + name);
+
+        if(wholeResponse[0].opening_hours.open_now == true){
+            hours = name + " is open now.";
+        }else if(wholeResponse[0].opening_hours.open_now == false){
+            hours = name + " is closed now.";
+        }else{
+            hours = name + " does not have hours of operation."; 
+        }
+
+        $('#api-hours').text(hours);
+    }
+
+    //submits search request INDEX.HTML Page!!!!!!
+    $(document).on('click', '#search-submit', function(){
+
+        //$("#main-content").empty();
+        // $("#intro-image").addClass('hide');
+
+        //grabs the value from the input textfield
+        var term = $('#search').val().trim(); 
+
+        var searchPic = "";
+        var searchName = "";
+        var searchLocation = "";
+        var searchType = "";
+        var searchHours = "";
+
+        //query string for api that includes search parameter
+        var queryURL = "https://crossorigin.me/https://maps.googleapis.com/maps/api/place/textsearch/json?query="+ term +"&key=AIzaSyC-OI8taHVJIYUQuUFM2zqo3gigV0O5QiU";
+
+        //ajax makes request and returns the response
+        $.ajax({url: queryURL, method: 'GET'}).done(function(response) {
+
+            console.log(response.results);
+            console.log(response.results[0].photos[0].photo_reference);
+
+            //var locationData = response.results;
+
+            for (i = 0; i < response.results.length; i++) { 
+                console.log(response.results[i]);
+            
+
+                $('#main').empty();
+
+                var searchDiv = $('<div class="panel panel-primary">'); //creates a div with class
+
+                  var searchDivHead = $('<div class="panel-heading">'); //creates a div with class
+
+                  var searchDivTitle = $('<div class="panel-title">'); //creates a div with class
+
+                  var searchDivBody = $('<div class="panel-body">'); //creates a div with class
+
+                  var searchImage = $('<img>'); //creates a new image element
+                  searchImage.attr('src', "https://crossorigin.me/https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference="+ response.results[i].photos[0].photo_reference +"&key=AIzaSyCfWQ61zboximEKVxwXKydldfeti6co9ag"); //added src attribut from google
+                  searchImage.addClass('story-image'); //added class to image
+
+                  var searchTitle = $('<h2>'); //creates a h2 element
+                  searchTitle.addClass('story-title'); //adds class to h2
+                  searchTitle.text(response.results[i].name); //adds text from DB title
+
+                  var searchBody = $('<h3>'); //creates a paragraph
+                  searchBody.text(response.results[i].formatted_address); //adds text from DB body
+                  searchBody.addClass('story-body'); //added class to body
+
+                  searchDivBody.append(searchImage)//appends the image to the div
+                  searchDivTitle.append(searchTitle)//appends the title to the div
+                  searchDivBody.append(searchBody)//appends the body text to the div
+
+                  searchDiv.append(searchDivHead)//appends the head to the panel
+                  searchDiv.append(searchDivBody)//appends the body to the panel
+                  searchDivHead.append(searchDivTitle)//appends the title to the head
+
+                  $('#search-results').prepend(searchDiv);//prepends entire story div to main-content div
+
+            }
+        });
+
+    });
+
+    function renderIndexSearch(search, name, location, type, wholeResponse){
 
         var queryPic = "https://crossorigin.me/https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference="+ search +"&key=AIzaSyCfWQ61zboximEKVxwXKydldfeti6co9ag";
         $('#api-hours').empty();
