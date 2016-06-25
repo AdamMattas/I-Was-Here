@@ -242,6 +242,16 @@ h3{
   border-radius:0px;
   z-index: 100;
 }
+
+.btn-underride{
+  position: relative;
+  background-color: #000000;
+  color: #FFFFFF;
+}
+
+.modal-input-margin{
+  margin-bottom: 10px;
+}
 /*end bootstrap search*/
 
 .black{
@@ -421,6 +431,19 @@ h3{
   position: relative;
   float: right;
   margin-left: 15px;
+}
+
+.story-key{
+  margin-right: 15px;
+  margin-bottom: 15px;
+  cursor: pointer;
+  font-size: 25px;
+}
+
+.search-body{
+  margin-top: 0px;
+  margin-bottom: 5px;
+  white-space: pre-wrap;
 }
 
 .footer{

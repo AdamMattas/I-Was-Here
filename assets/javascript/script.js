@@ -133,7 +133,16 @@ $(document).on('ready', function(){
             var storyTitle = $('#storyTitle').val().trim();
             var storyImage = $('#storyImage').val().trim();
             var storyBody = $('#storyBody').val().trim();
-            var storyKeyword = $('#storyKeyword').val().trim();
+            var storyKeyword1 = $('#storyKeyword1').val().trim();
+            var storyKeyword2 = $('#storyKeyword2').val().trim();
+            var storyKeyword3 = $('#storyKeyword3').val().trim();
+            var storyKeyword4 = $('#storyKeyword4').val().trim();
+            var storyKeyword5 = $('#storyKeyword5').val().trim();
+            var storyKeyword6 = $('#storyKeyword6').val().trim();
+            var storyKeyword7 = $('#storyKeyword7').val().trim();
+            var storyKeyword8 = $('#storyKeyword8').val().trim();
+            var storyKeyword9 = $('#storyKeyword9').val().trim();
+            var storyKeyword10 = $('#storyKeyword10').val().trim();
 
             //targets child node in Firebase DB
             var userStoryRef = dataRef.child("users");
@@ -144,7 +153,16 @@ $(document).on('ready', function(){
                   title: storyTitle,
                   image: storyImage,
                   body: storyBody,
-                  keywords: storyKeyword
+                  keyword1: storyKeyword1,
+                  keyword2: storyKeyword2,
+                  keyword3: storyKeyword3,
+                  keyword4: storyKeyword4,
+                  keyword5: storyKeyword5,
+                  keyword6: storyKeyword6,
+                  keyword7: storyKeyword7,
+                  keyword8: storyKeyword8,
+                  keyword9: storyKeyword9,
+                  keyword10: storyKeyword10
                 }
             });
         }
@@ -205,7 +223,7 @@ $(document).on('ready', function(){
         var searchHours = "";
 
         //query string for api that includes search parameter
-        var queryURL = "https://crossorigin.me/https://maps.googleapis.com/maps/api/place/textsearch/json?query="+ term +"&key=AIzaSyC-OI8taHVJIYUQuUFM2zqo3gigV0O5QiU";
+        var queryURL = "https://crossorigin.me/https://maps.googleapis.com/maps/api/place/textsearch/json?query="+ term +"&key=AIzaSyCQMIrfC5T4I3TSO_avZHcEe2Uuwe9zViM";
 
         //ajax makes request and returns the response
         $.ajax({url: queryURL, method: 'GET'}).done(function(response) {
@@ -229,7 +247,7 @@ $(document).on('ready', function(){
 
     function renderSearch(search, name, location, type, wholeResponse){
 
-        var queryPic = "https://crossorigin.me/https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference="+ search +"&key=AIzaSyCfWQ61zboximEKVxwXKydldfeti6co9ag";
+        var queryPic = "https://crossorigin.me/https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference="+ search +"&key=AIzaSyCQMIrfC5T4I3TSO_avZHcEe2Uuwe9zViM";
         $('#api-hours').empty();
         $('#api-image').attr('src', queryPic);
         $('#api-title').text(name);
@@ -266,7 +284,7 @@ $(document).on('ready', function(){
         var searchHours = "";
 
         //query string for api that includes search parameter
-        var queryURL = "https://crossorigin.me/https://maps.googleapis.com/maps/api/place/textsearch/json?query="+ term +"&key=AIzaSyCfWQ61zboximEKVxwXKydldfeti6co9ag";
+        var queryURL = "https://crossorigin.me/https://maps.googleapis.com/maps/api/place/textsearch/json?query="+ term +"&key=AIzaSyCQMIrfC5T4I3TSO_avZHcEe2Uuwe9zViM";
 
         //ajax makes request and returns the response
         $.ajax({url: queryURL, method: 'GET'}).done(function(response) {
@@ -285,7 +303,7 @@ $(document).on('ready', function(){
 
             //console.log(firstQuery);
 
-            var secondQuery = "https://crossorigin.me/https://maps.googleapis.com/maps/api/place/details/json?placeid="+ firstQuery +"&key=AIzaSyCfWQ61zboximEKVxwXKydldfeti6co9ag";
+            var secondQuery = "https://crossorigin.me/https://maps.googleapis.com/maps/api/place/details/json?placeid="+ firstQuery +"&key=AIzaSyCQMIrfC5T4I3TSO_avZHcEe2Uuwe9zViM";
 
             $.ajax({url: secondQuery, method: 'GET'}).done(function(deepResponse) {
                 
@@ -301,8 +319,11 @@ $(document).on('ready', function(){
 
                       var searchDivBody = $('<div class="panel-body">'); //creates a div with class
 
+                      var a = $("<a>").attr("href", deepResponse.result.url);
+                      a.attr('target', '_blank');
+
                       var searchImage = $('<img>'); //creates a new image element
-                      searchImage.attr('src', "https://crossorigin.me/https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference="+ deepResponse.result.photos[0].photo_reference +"&key=AIzaSyCfWQ61zboximEKVxwXKydldfeti6co9ag"); //added src attribut from google
+                      searchImage.attr('src', "https://crossorigin.me/https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference="+ deepResponse.result.photos[0].photo_reference +"&key=AIzaSyCQMIrfC5T4I3TSO_avZHcEe2Uuwe9zViM"); //added src attribut from google
                       searchImage.addClass('story-image'); //added class to image
 
                       var searchTitle = $('<h2>'); //creates a h2 element
@@ -311,22 +332,28 @@ $(document).on('ready', function(){
 
                       var searchAddress = $('<h3>'); //creates a paragraph
                       searchAddress.text(deepResponse.result.formatted_address); //adds text from DB body
-                      searchAddress.addClass('story-body'); //added class to body
+                      searchAddress.addClass('search-body'); //added class to body
 
                       var searchPhone = $('<h3>'); //creates a paragraph
                       searchPhone.text(deepResponse.result.formatted_phone_number); //adds text from DB body
-                      searchPhone.addClass('story-body'); //added class to body
+                      searchPhone.addClass('search-body'); //added class to body
 
-                      var searchText = $('<a>'); //creates a paragraph
-                      searchText.attr('href', deepResponse.result.website);
-                      searchText.text("Visit " + deepResponse.result.name); //adds text from DB body
-                      searchText.addClass('story-body'); //added class to body
+                      // var searchText = $('<a>'); //creates a paragraph
+                      // searchText.attr('href', deepResponse.result.website);
+                      // searchText.text("Visit " + deepResponse.result.name); //adds text from DB body
+                      // searchText.addClass('search-body'); //added class to body
 
-                      searchDivBody.append(searchImage)//appends the image to the div
+                      // var searchReview = $('<p>'); //creates a paragraph
+                      // searchReview.text(deepResponse.result.reviews[0].text); //adds text from DB body
+                      // searchReview.addClass('search-body'); //added class to body
+
+                      a.append(searchImage);
+                      searchDivBody.append(a)//appends the image to the div
                       searchDivTitle.append(searchTitle)//appends the title to the div
                       searchDivBody.append(searchAddress)//appends the body text to the div
                       searchDivBody.append(searchPhone)//appends the body text to the div
-                      searchDivBody.append(searchText)//appends the body text to the div
+                      //searchDivBody.append(searchText)//appends the body text to the div
+                      //searchDivBody.append(searchReview)//appends the body text to the div
 
                       searchDiv.append(searchDivHead)//appends the head to the panel
                       searchDiv.append(searchDivBody)//appends the body to the panel
@@ -340,27 +367,27 @@ $(document).on('ready', function(){
 
     });
 
-    function renderIndexSearch(search, name, location, type, wholeResponse){
+    // function renderIndexSearch(search, name, location, type, wholeResponse){
 
-        var queryPic = "https://crossorigin.me/https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference="+ search +"&key=AIzaSyCfWQ61zboximEKVxwXKydldfeti6co9ag";
-        $('#api-hours').empty();
-        $('#api-image').attr('src', queryPic);
-        $('#api-title').text(name);
-        $('#api-address').text(location);
-        $('#api-type').text(type);
+    //     var queryPic = "https://crossorigin.me/https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference="+ search +"&key=AIzaSyCQMIrfC5T4I3TSO_avZHcEe2Uuwe9zViM";
+    //     $('#api-hours').empty();
+    //     $('#api-image').attr('src', queryPic);
+    //     $('#api-title').text(name);
+    //     $('#api-address').text(location);
+    //     $('#api-type').text(type);
 
-        if(wholeResponse[0].opening_hours.open_now == true){
-            hours = name + " is open now.";
-        }else if(wholeResponse[0].opening_hours.open_now == false){
-            hours = name + " is closed now.";
-        }else{
-            hours = name + " does not have hours of operation."; 
-        }
+    //     if(wholeResponse[0].opening_hours.open_now == true){
+    //         hours = name + " is open now.";
+    //     }else if(wholeResponse[0].opening_hours.open_now == false){
+    //         hours = name + " is closed now.";
+    //     }else{
+    //         hours = name + " does not have hours of operation."; 
+    //     }
 
-        $('#api-hours').text(hours);
+    //     $('#api-hours').text(hours);
 
 
-    }
+    // }
 
     //Listens for Login Submit Button Click
   $("#loginSubmit").on("click", function() {
