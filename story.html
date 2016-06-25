@@ -127,6 +127,12 @@
 								<label for="storyBody">Your Story</label>
 								<textarea type="text" class="form-control" id="storyBody"></textarea>
 							</div>
+							<div class="form-group">
+								<label for="storyKeyword">Keywords</label>
+								<p>Add keywords for places mentioned in your story (separate with commas).</p>
+								<p>Keywords will help people find your story, and will be clickable for for info.</p>
+								<textarea type="text" class="form-control" id="storyKeyword"></textarea>
+							</div>
 							<input id="storySubmit" type="submit" class="btn btn-default">
 						</form>
 	        </div>
@@ -143,7 +149,7 @@
 			<div class="search">
 				<div class="search-cover"></div>
 				<input id="search" type="text" class="form-control input-sm" maxlength="64" placeholder="Search" />
-				<a id="search-submit" href="#" class="btn btn-primary black">Search</a>
+				<a id="search-submit-story" class="btn btn-primary black">Search</a>
 			</div>
 			<!-- Single button -->
 			<div id="nav-logged" class="btn-group right">	
@@ -159,16 +165,21 @@
 		<div class="content-wrapper">
 			<div id="main-content" class="col-md-8"></div>
 			<div id="side-content" class="col-md-4">
-				<div class="panel panel-primary">
+				<div id="google-api" class="panel panel-primary">
 					<div class="panel-heading">
-						<h3 class="panel-title">API Goes Here</h3>
+						<h3 id="api-title" class="panel-title"></h3>
 					</div>
-					<div class="panel-body"></div>
+					<div class="panel-body">
+						<p id="api-address"></p>
+						<img id="api-image">
+						<p id="api-type"></p>
+						<p id="api-hours" class="api-blue"></p>
+					</div>
 				</div>
 
 				<div class="panel panel-primary">
 					<div class="panel-heading">
-						<h3 class="panel-title">API Goes Here</h3>
+						<h3 id="weather-title" class="panel-title"></h3>
 					</div>
 					<div class="panel-body"></div>
 				</div>

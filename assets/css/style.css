@@ -160,7 +160,8 @@ h3{
 
 .main-content-wrapper{
   width: 80%;
-  margin: 0 auto; 
+  margin: 0 auto;
+  clear: both;
 }
 
 .content-wrapper{
@@ -366,6 +367,10 @@ h3{
 .panel-primary>.panel-heading {
   background-color: #004c86;
   border-color: #004c86;
+}
+
+.api-blue{
+  color: #004c86;
 }
 
 .story{
