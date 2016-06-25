@@ -252,7 +252,8 @@ $(document).on('ready', function(){
     //submits search request INDEX.HTML Page!!!!!!
     $(document).on('click', '#search-submit', function(){
 
-        //$("#main-content").empty();
+        $('#main').empty();
+        $('#search-results').empty();
         // $("#intro-image").addClass('hide');
 
         //grabs the value from the input textfield
@@ -265,54 +266,77 @@ $(document).on('ready', function(){
         var searchHours = "";
 
         //query string for api that includes search parameter
-        var queryURL = "https://crossorigin.me/https://maps.googleapis.com/maps/api/place/textsearch/json?query="+ term +"&key=AIzaSyC-OI8taHVJIYUQuUFM2zqo3gigV0O5QiU";
+        var queryURL = "https://crossorigin.me/https://maps.googleapis.com/maps/api/place/textsearch/json?query="+ term +"&key=AIzaSyCfWQ61zboximEKVxwXKydldfeti6co9ag";
 
         //ajax makes request and returns the response
         $.ajax({url: queryURL, method: 'GET'}).done(function(response) {
 
-            console.log(response.results);
-            console.log(response.results[0].photos[0].photo_reference);
-
-            //var locationData = response.results;
-
-            for (i = 0; i < response.results.length; i++) { 
-                console.log(response.results[i]);
-            
-
-                $('#main').empty();
-
-                var searchDiv = $('<div class="panel panel-primary">'); //creates a div with class
-
-                  var searchDivHead = $('<div class="panel-heading">'); //creates a div with class
-
-                  var searchDivTitle = $('<div class="panel-title">'); //creates a div with class
-
-                  var searchDivBody = $('<div class="panel-body">'); //creates a div with class
-
-                  var searchImage = $('<img>'); //creates a new image element
-                  searchImage.attr('src', "https://crossorigin.me/https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference="+ response.results[i].photos[0].photo_reference +"&key=AIzaSyCfWQ61zboximEKVxwXKydldfeti6co9ag"); //added src attribut from google
-                  searchImage.addClass('story-image'); //added class to image
-
-                  var searchTitle = $('<h2>'); //creates a h2 element
-                  searchTitle.addClass('story-title'); //adds class to h2
-                  searchTitle.text(response.results[i].name); //adds text from DB title
-
-                  var searchBody = $('<h3>'); //creates a paragraph
-                  searchBody.text(response.results[i].formatted_address); //adds text from DB body
-                  searchBody.addClass('story-body'); //added class to body
-
-                  searchDivBody.append(searchImage)//appends the image to the div
-                  searchDivTitle.append(searchTitle)//appends the title to the div
-                  searchDivBody.append(searchBody)//appends the body text to the div
-
-                  searchDiv.append(searchDivHead)//appends the head to the panel
-                  searchDiv.append(searchDivBody)//appends the body to the panel
-                  searchDivHead.append(searchDivTitle)//appends the title to the head
-
-                  $('#search-results').prepend(searchDiv);//prepends entire story div to main-content div
-
+            //console.log(response.results);
+            //console.log(response.results[0].photos[0].photo_reference);
+            for (i = 0; i < response.results.length; i++) {
+                var firstQuery = response.results[i].place_id;
+                //console.log(response.results[i].place_id);
+                //var locationData = response.results;
+                deepQuery(firstQuery);
             }
         });
+
+        function deepQuery(firstQuery){
+
+            //console.log(firstQuery);
+
+            var secondQuery = "https://crossorigin.me/https://maps.googleapis.com/maps/api/place/details/json?placeid="+ firstQuery +"&key=AIzaSyCfWQ61zboximEKVxwXKydldfeti6co9ag";
+
+            $.ajax({url: secondQuery, method: 'GET'}).done(function(deepResponse) {
+                
+                    console.log(deepResponse.result);
+
+                    
+
+                    var searchDiv = $('<div class="panel panel-primary">'); //creates a div with class
+
+                      var searchDivHead = $('<div class="panel-heading">'); //creates a div with class
+
+                      var searchDivTitle = $('<div class="panel-title">'); //creates a div with class
+
+                      var searchDivBody = $('<div class="panel-body">'); //creates a div with class
+
+                      var searchImage = $('<img>'); //creates a new image element
+                      searchImage.attr('src', "https://crossorigin.me/https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference="+ deepResponse.result.photos[0].photo_reference +"&key=AIzaSyCfWQ61zboximEKVxwXKydldfeti6co9ag"); //added src attribut from google
+                      searchImage.addClass('story-image'); //added class to image
+
+                      var searchTitle = $('<h2>'); //creates a h2 element
+                      searchTitle.addClass('story-title'); //adds class to h2
+                      searchTitle.text(deepResponse.result.name); //adds text from DB title
+
+                      var searchAddress = $('<h3>'); //creates a paragraph
+                      searchAddress.text(deepResponse.result.formatted_address); //adds text from DB body
+                      searchAddress.addClass('story-body'); //added class to body
+
+                      var searchPhone = $('<h3>'); //creates a paragraph
+                      searchPhone.text(deepResponse.result.formatted_phone_number); //adds text from DB body
+                      searchPhone.addClass('story-body'); //added class to body
+
+                      var searchText = $('<a>'); //creates a paragraph
+                      searchText.attr('href', deepResponse.result.website);
+                      searchText.text("Visit " + deepResponse.result.name); //adds text from DB body
+                      searchText.addClass('story-body'); //added class to body
+
+                      searchDivBody.append(searchImage)//appends the image to the div
+                      searchDivTitle.append(searchTitle)//appends the title to the div
+                      searchDivBody.append(searchAddress)//appends the body text to the div
+                      searchDivBody.append(searchPhone)//appends the body text to the div
+                      searchDivBody.append(searchText)//appends the body text to the div
+
+                      searchDiv.append(searchDivHead)//appends the head to the panel
+                      searchDiv.append(searchDivBody)//appends the body to the panel
+                      searchDivHead.append(searchDivTitle)//appends the title to the head
+
+                      $('#search-results').prepend(searchDiv);//prepends entire story div to main-content div
+
+                
+            });
+        }
 
     });
 
