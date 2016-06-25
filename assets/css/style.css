@@ -49,6 +49,7 @@ h3{
 	height: 100%;
   margin: 0 auto;
 	position: relative;
+  clear: both;
 }
 
 .header{
@@ -162,6 +163,10 @@ h3{
   width: 80%;
   margin: 0 auto;
   clear: both;
+}
+
+.extra-bottom{
+  margin-bottom: 50px !important;
 }
 
 .content-wrapper{
@@ -367,6 +372,18 @@ h3{
   right: 0;
   width: 546px;
   height: 40px;
+  z-index: 198;
+}
+
+.create-button{
+  background-image: url("../images/create.png");
+  background-color: transparent;
+  width: 35px;
+  height: 200px;
+  position: absolute;
+  right: 0;
+  top: 140px;
+  cursor: pointer;
   z-index: 199;
 }
 

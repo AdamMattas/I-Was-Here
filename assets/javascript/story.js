@@ -96,16 +96,16 @@ $(document).on('ready', function(){
     storyKey10.text(snapshot.val().story.keyword10); //adds text from DB body
     storyKey10.addClass('story-key');
 
-    keyDivBody.append(storyKey1)//appends the image to the div
-    keyDivBody.append(storyKey2)//appends the image to the div
-    keyDivBody.append(storyKey3)//appends the image to the div
-    keyDivBody.append(storyKey4)//appends the image to the div
-    keyDivBody.append(storyKey5)//appends the image to the div
-    keyDivBody.append(storyKey6)//appends the image to the div
-    keyDivBody.append(storyKey7)//appends the image to the div
-    keyDivBody.append(storyKey8)//appends the image to the div
-    keyDivBody.append(storyKey9)//appends the image to the div
-    keyDivBody.append(storyKey10)//appends the image to the div
+    keyDivBody.append(storyKey1)//appends the keyword to the div
+    keyDivBody.append(storyKey2)//appends the keyword to the div
+    keyDivBody.append(storyKey3)//appends the keyword to the div
+    keyDivBody.append(storyKey4)//appends the keyword to the div
+    keyDivBody.append(storyKey5)//appends the keyword to the div
+    keyDivBody.append(storyKey6)//appends the keyword to the div
+    keyDivBody.append(storyKey7)//appends the keyword to the div
+    keyDivBody.append(storyKey8)//appends the keywordto the div
+    keyDivBody.append(storyKey9)//appends the keyword to the div
+    keyDivBody.append(storyKey10)//appends the keyword to the div
 
     keyDiv.append(keyDivHead)//appends the image to the div
     keyDiv.append(keyDivBody)//appends the image to the div
@@ -121,9 +121,6 @@ $(document).on('ready', function(){
 
 	//submits search request STORY.HTML Page!!!!!
 	$(document).on('click', '.story-key', function(){
-
-		//$("#main-content").empty();
-		// $("#intro-image").addClass('hide');
 
 		//grabs the value from the input textfield
 		var term = $(this).text(); 

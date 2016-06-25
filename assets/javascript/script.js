@@ -48,7 +48,7 @@ $(document).on('ready', function(){
     }
 
     //check if current page is user.html
-    if(window.location.href === "file:///C:/Users/midwe/Desktop/Bootcamp/team_projects/I-Was-Here/user.html") {
+    if(window.location.href === "http://safe-earth-41968.herokuapp.com/user.html") {
         //check if user is logged in
         if(authData !== null){ //checks to see if client is authenticated
 
@@ -146,29 +146,36 @@ $(document).on('ready', function(){
             var storyKeyword9 = $('#storyKeyword9').val().trim();
             var storyKeyword10 = $('#storyKeyword10').val().trim();
 
-            //targets child node in Firebase DB
-            var userStoryRef = dataRef.child("users");
+            if($("#storyTitle").val() === "" || $("#storyBody").val() === "" || $("#storyKeyword1").val() === "") {
+                return false;
+            }else{
 
-            //add story to specific user node in DB
-            userStoryRef.child(user).push({
-                story: {
-                  title: storyTitle,
-                  image: storyImage,
-                  body: storyBody,
-                  keyword1: storyKeyword1,
-                  keyword2: storyKeyword2,
-                  keyword3: storyKeyword3,
-                  keyword4: storyKeyword4,
-                  keyword5: storyKeyword5,
-                  keyword6: storyKeyword6,
-                  keyword7: storyKeyword7,
-                  keyword8: storyKeyword8,
-                  keyword9: storyKeyword9,
-                  keyword10: storyKeyword10
-                }
-            });
+                //targets child node in Firebase DB
+                var userStoryRef = dataRef.child("users");
+
+                //add story to specific user node in DB
+                userStoryRef.child(user).push({
+                    story: {
+                      title: storyTitle,
+                      image: storyImage,
+                      body: storyBody,
+                      keyword1: storyKeyword1,
+                      keyword2: storyKeyword2,
+                      keyword3: storyKeyword3,
+                      keyword4: storyKeyword4,
+                      keyword5: storyKeyword5,
+                      keyword6: storyKeyword6,
+                      keyword7: storyKeyword7,
+                      keyword8: storyKeyword8,
+                      keyword9: storyKeyword9,
+                      keyword10: storyKeyword10
+                    }
+                });
+
+            }
+
         }
-        // Don't refresh the page!
+        location.reload();
         return false;
     });
 
@@ -193,9 +200,9 @@ $(document).on('ready', function(){
         var ref = new Firebase("https://i-was-here.firebaseio.com/users/" + user);
         //Grabs firebase child key stored in the button's data-id attribute
         keyId = $(this).attr('data-id');
-        console.log(keyId);
         //Removes child with corresponding key from firebase
         ref.child(keyId).remove();
+        location.reload();
 
     });
 
@@ -211,9 +218,6 @@ $(document).on('ready', function(){
 
     //submits search request STORY.HTML Page!!!!!
 	$(document).on('click', '#search-submit-story', function(){
-
-		//$("#main-content").empty();
-		// $("#intro-image").addClass('hide');
 
 		//grabs the value from the input textfield
 		var term = $('#search').val().trim(); 
