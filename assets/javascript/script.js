@@ -19,6 +19,8 @@ $(document).on('ready', function(){
 
             user = authData.uid;
 
+            $(".trees, .trees2").css({"width": "826px"});
+
             // Get a database reference to our posts
             var ref = new Firebase("https://i-was-here.firebaseio.com/users/" + user);
 
@@ -242,7 +244,8 @@ $(document).on('ready', function(){
             renderSearch(searchPic, searchName, searchLocation, searchType, response.results);
             
         });
-
+        // Don't refresh the page!
+        return false;
     });
 
     function renderSearch(search, name, location, type, wholeResponse){
@@ -364,7 +367,8 @@ $(document).on('ready', function(){
                 
             });
         }
-
+        // Don't refresh the page!
+        return false;
     });
 
     // function renderIndexSearch(search, name, location, type, wholeResponse){
@@ -409,6 +413,7 @@ $(document).on('ready', function(){
                 user = authData.uid;
                 //Login Button and show Logout Button after successful login
                 $("#logout-button, #login-button").toggleClass('hide show');
+                location.reload();
               }
         });
       // Don't refresh the page!
