@@ -49,6 +49,7 @@ h3{
 	height: 100%;
   margin: 0 auto;
 	position: relative;
+  clear: both;
 }
 
 .header{
@@ -164,6 +165,10 @@ h3{
   clear: both;
 }
 
+.extra-bottom{
+  margin-bottom: 50px !important;
+}
+
 .content-wrapper{
   width: 90%;
   margin: 0 auto;
@@ -241,6 +246,16 @@ h3{
   /*border: 1px solid #000000;*/
   border-radius:0px;
   z-index: 100;
+}
+
+.btn-underride{
+  position: relative;
+  background-color: #000000;
+  color: #FFFFFF;
+}
+
+.modal-input-margin{
+  margin-bottom: 10px;
 }
 /*end bootstrap search*/
 
@@ -345,7 +360,7 @@ h3{
   position: absolute;
   top: 139px;
   right: 0;
-  width: 826px;
+  width: 546px;
   height: 40px;
   z-index: 200;
 }
@@ -355,8 +370,20 @@ h3{
   position: absolute;
   top: 141px;
   right: 0;
-  width: 826px;
+  width: 546px;
   height: 40px;
+  z-index: 198;
+}
+
+.create-button{
+  background-image: url("../images/create.png");
+  background-color: transparent;
+  width: 35px;
+  height: 200px;
+  position: absolute;
+  right: 0;
+  top: 140px;
+  cursor: pointer;
   z-index: 199;
 }
 
@@ -421,6 +448,19 @@ h3{
   position: relative;
   float: right;
   margin-left: 15px;
+}
+
+.story-key{
+  margin-right: 15px;
+  margin-bottom: 15px;
+  cursor: pointer;
+  font-size: 25px;
+}
+
+.search-body{
+  margin-top: 0px;
+  margin-bottom: 5px;
+  white-space: pre-wrap;
 }
 
 .footer{

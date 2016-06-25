@@ -51,17 +51,18 @@
 	          <form>
 							<div class="form-group">
 								<label for="loginEmail">Email Address</label>
-								<input type="text" class="form-control" id="loginEmail">
+								<input type="text" class="form-control" id="loginEmail" required>
 							</div>
 							<div class="form-group">
 								<label for="loginPass">Password</label>
-								<input type="password" class="form-control" id="loginPass">
+								<input type="password" class="form-control" id="loginPass" required>
 							</div>
-							<input id="loginSubmit" type="submit" class="btn btn-default">
+							<input id="loginSubmit" type="submit" class="btn btn-default btn-underride">
 						</form>
 	        </div>
 	        <div class="modal-footer">
-	          <button type="button" class="btn btn-default" data-toggle="modal" data-target="#signModal">Sign Up</button>
+	        	<label>Don't have an account? Create one for free.</label>
+	          <button type="button" class="btn btn-default btn-underride" data-toggle="modal" data-target="#signModal">Sign Up</button>
 	        </div>
 	      </div>
 	      
@@ -82,21 +83,21 @@
 	          <form>
 	          	<div class="form-group">
 								<label for="signName">Username</label>
-								<input type="text" class="form-control" id="signName">
+								<input type="text" class="form-control" id="signName" required>
 							</div>
 							<div class="form-group">
 								<label for="signEmail">Email Address</label>
-								<input type="text" class="form-control" id="signEmail">
+								<input type="text" class="form-control" id="signEmail" required>
 							</div>
 							<div class="form-group">
 								<label for="signPass">Password</label>
-								<input type="password" class="form-control" id="signPass">
+								<input type="password" class="form-control" id="signPass" required>
 							</div>
-							<input id="signSubmit" type="submit" class="btn btn-default">
+							<input id="signSubmit" type="submit" class="btn btn-default btn-underride">
 						</form>
 	        </div>
 	        <div class="modal-footer">
-	          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	          <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
 	        </div>
 	      </div>
 	      
@@ -117,27 +118,46 @@
 	          <form>
 	          	<div class="form-group">
 								<label for="storyTitle">Title</label>
-								<input type="text" class="form-control" id="storyTitle">
+								<input type="text" class="form-control" id="storyTitle" placeholder="Give your story a title" required>
 							</div>
 							<div class="form-group">
 								<label for="storyImage">Story Image</label>
-								<input type="text" class="form-control" id="storyImage">
+								<input type="text" class="form-control" id="storyImage" placeholder="http://example-picture.jpg">
 							</div>
 							<div class="form-group">
 								<label for="storyBody">Your Story</label>
-								<textarea type="text" class="form-control" id="storyBody"></textarea>
-							</div>
-							<div class="form-group">
-								<label for="storyKeyword">Keywords</label>
-								<p>Add keywords for places mentioned in your story (separate with commas).</p>
+								<textarea type="text" class="form-control" id="storyBody" placeholder="Start your story..." required></textarea>
+							</div>						
+								<label for="keyPanel">Add up to 10 Keywords for places mentioned in your story.</label>
 								<p>Keywords will help people find your story, and will be clickable for for info.</p>
-								<textarea type="text" class="form-control" id="storyKeyword"></textarea>
+							<div id="keyPanel" class="form-group">
+
+								<div class="col-md-6">
+									
+									<input type="text" class="form-control modal-input-margin" id="storyKeyword1" placeholder="Keyword 1" required>
+									<input type="text" class="form-control modal-input-margin" id="storyKeyword3" placeholder="Keyword 3">
+									<input type="text" class="form-control modal-input-margin" id="storyKeyword5" placeholder="Keyword 5">
+									<input type="text" class="form-control modal-input-margin" id="storyKeyword7" placeholder="Keyword 7">
+									<input type="text" class="form-control modal-input-margin" id="storyKeyword9" placeholder="Keyword 9">
+
+								</div>
+
+								<div class="col-md-6">
+									
+									<input type="text" class="form-control modal-input-margin" id="storyKeyword2" placeholder="Keyword 2">
+									<input type="text" class="form-control modal-input-margin" id="storyKeyword4" placeholder="Keyword 4">
+									<input type="text" class="form-control modal-input-margin" id="storyKeyword6" placeholder="Keyword 6">
+									<input type="text" class="form-control modal-input-margin" id="storyKeyword8" placeholder="Keyword 8">
+									<input type="text" class="form-control modal-input-margin" id="storyKeyword10" placeholder="Keyword 10">
+
+								</div>
+
 							</div>
-							<input id="storySubmit" type="submit" class="btn btn-default">
+							<input id="storySubmit" type="submit" class="btn btn-default btn-underride">
 						</form>
 	        </div>
 	        <div class="modal-footer">
-	          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	          <!-- <button type="button" class="btn btn-default btn-underride" data-dismiss="modal">Close</button> -->
 	        </div>
 	      </div>
 	      
@@ -158,14 +178,16 @@
 			  <a href="index.html" class="btn btn-primary about">About</a>
 			</div>
 
-			<button id="story-button" class="btn btn-primary" data-toggle="modal" data-target="#storyModal"></button>
+			<div id="story-button" class="create-button" data-toggle="modal" data-target="#storyModal"></div>
 
 		</div>
 
 		<div class="trees2"></div>
 		<div class="trees"></div>
 
-		<div id="main-content" class="col-md-12"></div>
+		<div class="content-wrapper">
+			<div id="main-content" class="col-md-12"></div>
+		</div>
 		
 		<div class="footer"></div>
 

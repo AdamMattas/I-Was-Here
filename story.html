@@ -38,37 +38,6 @@
 		</div>
 
 		<!-- Modal for editing added trains -->
-	  <div class="modal fade" id="loginModal" role="dialog">
-	    <div class="modal-dialog">
-	    
-	      <!-- Modal content inputs populated from script.js-->
-	      <div class="modal-content">
-	        <div class="modal-header">
-	          <button type="button" class="close" data-dismiss="modal">&times;</button>
-	          <h4 class="modal-title">Login</h4>
-	        </div>
-	        <div class="modal-body">
-	          <form>
-							<div class="form-group">
-								<label for="loginEmail">Email Address</label>
-								<input type="text" class="form-control" id="loginEmail">
-							</div>
-							<div class="form-group">
-								<label for="loginPass">Password</label>
-								<input type="password" class="form-control" id="loginPass">
-							</div>
-							<input id="loginSubmit" type="submit" class="btn btn-default">
-						</form>
-	        </div>
-	        <div class="modal-footer">
-	          <button type="button" class="btn btn-default" data-toggle="modal" data-target="#signModal">Sign Up</button>
-	        </div>
-	      </div>
-	      
-	    </div>
-	  </div>
-
-	  <!-- Modal for editing added trains -->
 	  <div class="modal fade" id="signModal" role="dialog">
 	    <div class="modal-dialog">
 	    
@@ -82,21 +51,21 @@
 	          <form>
 	          	<div class="form-group">
 								<label for="signName">Username</label>
-								<input type="text" class="form-control" id="signName">
+								<input type="text" class="form-control" id="signName" required>
 							</div>
 							<div class="form-group">
 								<label for="signEmail">Email Address</label>
-								<input type="text" class="form-control" id="signEmail">
+								<input type="text" class="form-control" id="signEmail" required>
 							</div>
 							<div class="form-group">
 								<label for="signPass">Password</label>
-								<input type="password" class="form-control" id="signPass">
+								<input type="password" class="form-control" id="signPass" required>
 							</div>
-							<input id="signSubmit" type="submit" class="btn btn-default">
+							<input id="signSubmit" type="submit" class="btn btn-default btn-underride">
 						</form>
 	        </div>
 	        <div class="modal-footer">
-	          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	          <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
 	        </div>
 	      </div>
 	      
@@ -117,27 +86,46 @@
 	          <form>
 	          	<div class="form-group">
 								<label for="storyTitle">Title</label>
-								<input type="text" class="form-control" id="storyTitle">
+								<input type="text" class="form-control" id="storyTitle" placeholder="Give your story a title" required>
 							</div>
 							<div class="form-group">
 								<label for="storyImage">Story Image</label>
-								<input type="text" class="form-control" id="storyImage">
+								<input type="text" class="form-control" id="storyImage" placeholder="http://example-picture.jpg">
 							</div>
 							<div class="form-group">
 								<label for="storyBody">Your Story</label>
-								<textarea type="text" class="form-control" id="storyBody"></textarea>
-							</div>
-							<div class="form-group">
-								<label for="storyKeyword">Keywords</label>
-								<p>Add keywords for places mentioned in your story (separate with commas).</p>
+								<textarea type="text" class="form-control" id="storyBody" placeholder="Start your story..." required></textarea>
+							</div>						
+								<label for="keyPanel">Add up to 10 Keywords for places mentioned in your story.</label>
 								<p>Keywords will help people find your story, and will be clickable for for info.</p>
-								<textarea type="text" class="form-control" id="storyKeyword"></textarea>
+							<div id="keyPanel" class="form-group">
+
+								<div class="col-md-6">
+									
+									<input type="text" class="form-control modal-input-margin" id="storyKeyword1" placeholder="Keyword 1" required>
+									<input type="text" class="form-control modal-input-margin" id="storyKeyword3" placeholder="Keyword 3">
+									<input type="text" class="form-control modal-input-margin" id="storyKeyword5" placeholder="Keyword 5">
+									<input type="text" class="form-control modal-input-margin" id="storyKeyword7" placeholder="Keyword 7">
+									<input type="text" class="form-control modal-input-margin" id="storyKeyword9" placeholder="Keyword 9">
+
+								</div>
+
+								<div class="col-md-6">
+									
+									<input type="text" class="form-control modal-input-margin" id="storyKeyword2" placeholder="Keyword 2">
+									<input type="text" class="form-control modal-input-margin" id="storyKeyword4" placeholder="Keyword 4">
+									<input type="text" class="form-control modal-input-margin" id="storyKeyword6" placeholder="Keyword 6">
+									<input type="text" class="form-control modal-input-margin" id="storyKeyword8" placeholder="Keyword 8">
+									<input type="text" class="form-control modal-input-margin" id="storyKeyword10" placeholder="Keyword 10">
+
+								</div>
+
 							</div>
-							<input id="storySubmit" type="submit" class="btn btn-default">
+							<input id="storySubmit" type="submit" class="btn btn-default btn-underride">
 						</form>
 	        </div>
 	        <div class="modal-footer">
-	          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	          <!-- <button type="button" class="btn btn-default btn-underride" data-dismiss="modal">Close</button> -->
 	        </div>
 	      </div>
 	      
@@ -147,16 +135,19 @@
 		<div class="inner">
 			
 			<div class="search">
-				<div class="search-cover"></div>
-				<input id="search" type="text" class="form-control input-sm" maxlength="64" placeholder="Search" />
-				<a id="search-submit-story" class="btn btn-primary black">Search</a>
+				<form>
+					<div class="search-cover"></div>
+					<input id="search" type="text" class="form-control input-sm" maxlength="64" placeholder="Search" />
+					<button id="search-submit-story" class="btn btn-primary black">Search</button>
+				</form>
 			</div>
 			<!-- Single button -->
-			<div id="nav-logged" class="btn-group right">	
+			<div id="nav-logged" class="btn-group right">
+				<!-- <a id="user-button" href="user.html" class="btn btn-primary blue hide"></a> -->
 			  <a href="index.html" class="btn btn-primary home">Home</a>
 			  <a href="index.html" class="btn btn-primary about">About</a>
 			</div>
-
+			
 		</div>
 
 		<div class="trees2"></div>
