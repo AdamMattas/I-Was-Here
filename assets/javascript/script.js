@@ -473,7 +473,7 @@ $(document).on('ready', function(){
       var key = "cbd1ecb89687e74e";
       
       // var city = "Manhattan";
-      var queryURL = "http://api.wunderground.com/api/" + key +/*Your_Key*/"/conditions/q/" + stateAbbreviation + "/" + city + ".json";
+      var queryURL = "https://crossorigin.me/http://api.wunderground.com/api/" + key +/*Your_Key*/"/conditions/q/" + stateAbbreviation + "/" + city + ".json";
 
         //ajax request and returns
         $.ajax({url: queryURL, method: 'GET'})
