@@ -48,7 +48,7 @@ $(document).on('ready', function(){
     }
 
     //check if current page is user.html
-    if(window.location.href === "https://whispering-atoll-32817.herokuapp.com/user.html") {
+    if(window.location.href === "file:///C:/Users/midwe/Desktop/Bootcamp/team_projects/I-Was-Here/user.html") {
         //check if user is logged in
         if(authData !== null){ //checks to see if client is authenticated
 
@@ -189,7 +189,6 @@ $(document).on('ready', function(){
 
         console.log(storyId);
         //Removes child with corresponding key from firebase
-        //ref.child(keyId).remove();
 
     });
 
@@ -304,6 +303,7 @@ $(document).on('ready', function(){
                 //var locationData = response.results;
                 deepQuery(firstQuery);
             }
+
         });
 
         function deepQuery(firstQuery){
@@ -315,8 +315,6 @@ $(document).on('ready', function(){
             $.ajax({url: secondQuery, method: 'GET'}).done(function(deepResponse) {
                 
                     console.log(deepResponse.result);
-
-                    
 
                     var searchDiv = $('<div class="panel panel-primary">'); //creates a div with class
 
@@ -367,8 +365,7 @@ $(document).on('ready', function(){
                       searchDivHead.append(searchDivTitle)//appends the title to the head
 
                       $('#search-results').prepend(searchDiv);//prepends entire story div to main-content div
-
-                
+             
             });
         }
         // Don't refresh the page!
@@ -461,73 +458,5 @@ $(document).on('ready', function(){
     window.location.replace("index.html");
 
   });
-
-  $(document).on('click', '#search-submit-2', function(){
-
-    //grabs the value from the input textfield
-    var city = $('#city').val().trim(); 
-    var stateAbbreviation = $('#state').val().trim(); 
-    //console.log(term);
-
-      //acceptable values
-      var key = "cbd1ecb89687e74e";
-      
-      // var city = "Manhattan";
-      var queryURL = "https://crossorigin.me/http://api.wunderground.com/api/" + key +/*Your_Key*/"/conditions/q/" + stateAbbreviation + "/" + city + ".json";
-
-        //ajax request and returns
-        $.ajax({url: queryURL, method: 'GET'})
-          .done(function(response) {
-            //console.log(response);
-          
-          var city, state, temperature, weather, time, wind, humidity, icon;
-
-          icon = response.current_observation.icon;
-          //console.log(icon);
-          city = response.current_observation.display_location.city;
-          //console.log(city);
-          state = response.current_observation.display_location.state_name;
-          //console.log(state);
-          temperature = response.current_observation.temperature_string;
-          //console.log(temperature);
-          weather = response.current_observation.weather;
-          //console.log(weather);
-          time = response.current_observation.local_time_rfc822;
-          //console.log(time);
-          wind = response.current_observation.wind_string;
-          //console.log(wind);
-          humidity = response.current_observation.relative_humidity;
-          //console.log(humidity);
-
-          var iconUrl = "http://icons.wxug.com/i/c/a/" + icon + ".gif" 
-
-          var elIcon = document.querySelector(".icon")
-          //console.log(elIcon);
-          elIcon.setAttribute('src', iconUrl);
-
-          var elCity = document.querySelector('.city');
-          //console.log(elCity);
-          elCity.innerHTML = city;
-
-          var elState = document.querySelector('.state');
-          elState.innerHTML = state;
-
-          var elTemp = document.querySelector('.degrees');
-          elTemp.innerHTML = temperature;
-
-          var elWea = document.querySelector('.weather');
-          elWea.innerHTML = weather;
-
-          var elTime = document.querySelector('.time');
-          elTime.innerHTML = time;
-
-          var elWind = document.querySelector('.wind');
-          elWind.innerHTML = wind;
-
-          var elHum = document.querySelector('.humidity');
-          elHum.innerHTML = humidity;
-        });
-          return false;
-    });
 
 });

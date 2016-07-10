@@ -103,7 +103,7 @@ $(document).on('ready', function(){
     keyDivBody.append(storyKey5)//appends the keyword to the div
     keyDivBody.append(storyKey6)//appends the keyword to the div
     keyDivBody.append(storyKey7)//appends the keyword to the div
-    keyDivBody.append(storyKey8)//appends the keywordto the div
+    keyDivBody.append(storyKey8)//appends the keyword to the div
     keyDivBody.append(storyKey9)//appends the keyword to the div
     keyDivBody.append(storyKey10)//appends the keyword to the div
 
@@ -147,12 +147,85 @@ $(document).on('ready', function(){
             searchLocation = response.results[0].formatted_address;
             searchType = response.results[0].types;
             //searchHours = response.results[0].opening_hours.open_now;
+            var firstQuery = response.results[0].place_id;
+            //console.log(response.results[i].place_id);
+            //var locationData = response.results;
+            deepQuery2(firstQuery);
 
             renderSearch(searchPic, searchName, searchLocation, searchType, response.results);
             
         });
 
     });
+
+    function deepQuery2(firstQuery){
+
+        var secondQuery = "https://crossorigin.me/https://maps.googleapis.com/maps/api/place/details/json?placeid="+ firstQuery +"&key=AIzaSyCQMIrfC5T4I3TSO_avZHcEe2Uuwe9zViM";
+
+        $.ajax({url: secondQuery, method: 'GET'}).done(function(deepResponse) {
+            
+                console.log(deepResponse.result);
+
+                var latitude = deepResponse.result.geometry.location.lat;
+
+                var longitude = deepResponse.result.geometry.location.lng;
+
+                //calls weather api and passes latitude & longitude
+                weatherQuery(latitude, longitude);
+
+                var searchDiv = $('<div class="panel panel-primary">'); //creates a div with class
+
+                  var searchDivHead = $('<div class="panel-heading">'); //creates a div with class
+
+                  var searchDivTitle = $('<div class="panel-title">'); //creates a div with class
+
+                  var searchDivBody = $('<div class="panel-body">'); //creates a div with class
+
+                  var a = $("<a>").attr("href", deepResponse.result.url);
+                  a.attr('target', '_blank');
+
+                  var searchImage = $('<img>'); //creates a new image element
+                  searchImage.attr('src', "https://crossorigin.me/https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference="+ deepResponse.result.photos[0].photo_reference +"&key=AIzaSyCQMIrfC5T4I3TSO_avZHcEe2Uuwe9zViM"); //added src attribut from google
+                  searchImage.addClass('story-image'); //added class to image
+
+                  var searchTitle = $('<h2>'); //creates a h2 element
+                  searchTitle.addClass('story-title'); //adds class to h2
+                  searchTitle.text(deepResponse.result.name); //adds text from DB title
+
+                  var searchAddress = $('<h3>'); //creates a paragraph
+                  searchAddress.text(deepResponse.result.formatted_address); //adds text from DB body
+                  searchAddress.addClass('search-body'); //added class to body
+
+                  var searchPhone = $('<h3>'); //creates a paragraph
+                  searchPhone.text(deepResponse.result.formatted_phone_number); //adds text from DB body
+                  searchPhone.addClass('search-body'); //added class to body
+
+                  // var searchText = $('<a>'); //creates a paragraph
+                  // searchText.attr('href', deepResponse.result.website);
+                  // searchText.text("Visit " + deepResponse.result.name); //adds text from DB body
+                  // searchText.addClass('search-body'); //added class to body
+
+                  // var searchReview = $('<p>'); //creates a paragraph
+                  // searchReview.text(deepResponse.result.reviews[0].text); //adds text from DB body
+                  // searchReview.addClass('search-body'); //added class to body
+
+                  a.append(searchImage);
+                  searchDivBody.append(a)//appends the image to the div
+                  searchDivTitle.append(searchTitle)//appends the title to the div
+                  searchDivBody.append(searchAddress)//appends the body text to the div
+                  searchDivBody.append(searchPhone)//appends the body text to the div
+                  //searchDivBody.append(searchText)//appends the body text to the div
+                  //searchDivBody.append(searchReview)//appends the body text to the div
+
+                  searchDiv.append(searchDivHead)//appends the head to the panel
+                  searchDiv.append(searchDivBody)//appends the body to the panel
+                  searchDivHead.append(searchDivTitle)//appends the title to the head
+
+                  $('#search-results').prepend(searchDiv);//prepends entire story div to main-content div
+
+            
+        });
+    }
 
     function renderSearch(search, name, location, type, wholeResponse){
 
@@ -175,5 +248,60 @@ $(document).on('ready', function(){
 
         $('#api-hours').text(hours);
     }
+
+    //weather UI
+    //submits search request
+  function weatherQuery(latitude, longitude){
+
+      var key = "cbd1ecb89687e74e";
+      
+      var queryURL = "https://crossorigin.me/http://api.wunderground.com/api/" + key +/*Your_Key*/"/conditions/q/" + latitude + "," + longitude + ".json";
+
+        //ajax request and returns
+        $.ajax({url: queryURL, method: 'GET'})
+          .done(function(response) {
+            //console.log(response);
+          
+          var city, state, temperature, weather, time, wind, humidity, icon;
+
+          icon = response.current_observation.icon;
+          city = response.current_observation.display_location.city;
+          state = response.current_observation.display_location.state_name;
+          temperature = response.current_observation.temperature_string;
+          weather = response.current_observation.weather;
+          time = response.current_observation.local_time_rfc822;
+          wind = response.current_observation.wind_string;
+          humidity = response.current_observation.relative_humidity;
+
+          var iconUrl = "http://icons.wxug.com/i/c/a/" + icon + ".gif" 
+
+          var elIcon = document.querySelector(".icon")
+
+          elIcon.setAttribute('src', iconUrl);
+
+          var elCity = document.querySelector('.city');
+
+          elCity.innerHTML = city;
+
+          var elState = document.querySelector('.state');
+          elState.innerHTML = state;
+
+          var elTemp = document.querySelector('.degrees');
+          elTemp.innerHTML = temperature;
+
+          var elWea = document.querySelector('.weather');
+          elWea.innerHTML = weather;
+
+          var elTime = document.querySelector('.time');
+          elTime.innerHTML = time;
+
+          var elWind = document.querySelector('.wind');
+          elWind.innerHTML = wind;
+
+          var elHum = document.querySelector('.humidity');
+          elHum.innerHTML = humidity;
+        });
+          return false;
+    };
 
 });
