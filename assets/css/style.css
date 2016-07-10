@@ -166,7 +166,7 @@ h3{
 }
 
 .extra-bottom{
-  margin-bottom: 50px !important;
+  margin-bottom: 126px !important;
 }
 
 .content-wrapper{
@@ -400,6 +400,10 @@ h3{
   color: #004c86;
 }
 
+#api-image{
+  border: 1px solid #000000;
+}
+
 .story{
   position: relative;
   width: 90%;
@@ -419,6 +423,7 @@ h3{
   height: auto;
   width: 200px;
   margin-right: 15px;
+  border: 1px solid #000000;
 }
 
 .story-title{
@@ -489,45 +494,43 @@ h3{
   border-radius: 8px;
   background-color: #337ab7;
   }
-  header{
-    height: 40px;
-    background-color: #337ab7;
-    border-top-right-radius: 7px;
-    border-top-left-radius: 7px;
-    color: white;
-    padding: 10px 15px;
-    font-weight: bold;
-    text-transform: uppercase;
-    font-size: 16px;
-  }  
-  .section{
-    width: 100%;
-    overflow: auto;
-    }
-    .pic{
-      width: 50%;
-      text-align: center;
-      float: left;
-      height: 200px;
-      }
-      .icon{
-        height: 100px;
-        width: 100px;
-      }
-    }
 
-    .content{
-      float: right;
-      right: 0;
-      width: 50%;
-      color: white;
-      font-family: 'Lato', sans-serif;
-      width: 100px;
-      }
+header{
+  height: 40px;
+  background-color: #337ab7;
+  border-top-right-radius: 7px;
+  border-top-left-radius: 7px;
+  color: white;
+  padding: 10px 15px;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 16px;
+}  
+.section{
+  width: 100%;
+  overflow: auto;
+}
 
-      li{
-        color: #000000;
-      }
-    }
-  }
+.pic{
+  width: 175px;
+  float: left;
+  height: 175px;
+}
+
+.icon{
+  height: 175px;
+  width: 175px;
+  border: 1px solid #000000;
+}
+
+.content{
+  float: right;
+  right: 0;
+  width: 50%;
+  color: white;
+  font-family: 'Lato', sans-serif;
+}
+
+li{
+  color: #000000;
 }

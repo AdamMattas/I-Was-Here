@@ -5,11 +5,13 @@ $(document).on('ready', function(){
 	var storyURL = getUrlVars()["id"];
 
 	function getUrlVars() {
+
 		var vars = {};
 		var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
 		vars[key] = value;
 		});
 		return vars;
+
 	}
 
 	console.log(storyURL);
@@ -125,38 +127,79 @@ $(document).on('ready', function(){
 		//grabs the value from the input textfield
 		var term = $(this).text(); 
 
-        var searchPic = "";
-        var searchName = "";
-        var searchLocation = "";
-        var searchType = "";
-        var searchHours = "";
+    var searchPic = "";
+    var searchName = "";
+    var searchLocation = "";
+    var searchType = "";
+    var searchHours = "";
 
-        //query string for api that includes search parameter
-        var queryURL = "https://crossorigin.me/https://maps.googleapis.com/maps/api/place/textsearch/json?query="+ term +"&key=AIzaSyCQMIrfC5T4I3TSO_avZHcEe2Uuwe9zViM";
+    //query string for api that includes search parameter
+    var queryURL = "https://crossorigin.me/https://maps.googleapis.com/maps/api/place/textsearch/json?query="+ term +"&key=AIzaSyCQMIrfC5T4I3TSO_avZHcEe2Uuwe9zViM";
 
-        //ajax makes request and returns the response
-        $.ajax({url: queryURL, method: 'GET'}).done(function(response) {
+    //ajax makes request and returns the response
+    $.ajax({url: queryURL, method: 'GET'}).done(function(response) {
 
-            console.log(response.results);
-        	console.log(response.results[0].photos[0].photo_reference);
+      console.log(response.results);
+  	  console.log(response.results[0].photos[0].photo_reference);
 
-            //var locationData = response.results;
+      //var locationData = response.results;
 
-            searchPic = response.results[0].photos[0].photo_reference;
-            searchName = response.results[0].name;
-            searchLocation = response.results[0].formatted_address;
-            searchType = response.results[0].types;
-            //searchHours = response.results[0].opening_hours.open_now;
-            var firstQuery = response.results[0].place_id;
-            //console.log(response.results[i].place_id);
-            //var locationData = response.results;
-            deepQuery2(firstQuery);
+      searchPic = response.results[0].photos[0].photo_reference;
+      searchName = response.results[0].name;
+      searchLocation = response.results[0].formatted_address;
+      searchType = response.results[0].types;
+      //searchHours = response.results[0].opening_hours.open_now;
+      var firstQuery = response.results[0].place_id;
+      //console.log(response.results[i].place_id);
+      //var locationData = response.results;
+      deepQuery2(firstQuery);
 
-            renderSearch(searchPic, searchName, searchLocation, searchType, response.results);
-            
-        });
-
+      renderSearch(searchPic, searchName, searchLocation, searchType, response.results);
+        
     });
+
+  });
+
+  //submits search request STORY.HTML Page!!!!!
+  $(document).on('click', '#search-submit-story', function(){
+
+    //grabs the value from the input textfield
+    var term = $('#search').val().trim(); 
+
+    var searchPic = "";
+    var searchName = "";
+    var searchLocation = "";
+    var searchType = "";
+    var searchHours = "";
+
+    //query string for api that includes search parameter
+    var queryURL = "https://crossorigin.me/https://maps.googleapis.com/maps/api/place/textsearch/json?query="+ term +"&key=AIzaSyCQMIrfC5T4I3TSO_avZHcEe2Uuwe9zViM";
+
+    //ajax makes request and returns the response
+    $.ajax({url: queryURL, method: 'GET'}).done(function(response) {
+
+      console.log(response.results);
+      console.log(response.results[0].photos[0].photo_reference);
+
+      //var locationData = response.results;
+
+      searchPic = response.results[0].photos[0].photo_reference;
+      searchName = response.results[0].name;
+      searchLocation = response.results[0].formatted_address;
+      searchType = response.results[0].types;
+      //searchHours = response.results[0].opening_hours.open_now;
+      var firstQuery = response.results[0].place_id;
+      //console.log(response.results[i].place_id);
+      //var locationData = response.results;
+      deepQuery2(firstQuery);
+      $("#google-api").removeClass("hide");
+      
+      renderSearch(searchPic, searchName, searchLocation, searchType, response.results);
+        
+    });
+    // Don't refresh the page!
+    return false;
+  });
 
     function deepQuery2(firstQuery){
 
@@ -223,7 +266,7 @@ $(document).on('ready', function(){
 
                   $('#search-results').prepend(searchDiv);//prepends entire story div to main-content div
 
-            
+                  $("#google-api").removeClass("hide");
         });
     }
 
@@ -300,6 +343,8 @@ $(document).on('ready', function(){
 
           var elHum = document.querySelector('.humidity');
           elHum.innerHTML = humidity;
+
+          $("#weather-api").removeClass("hide");
         });
           return false;
     };
