@@ -235,104 +235,132 @@ $(document).on('ready', function(){
 
   }
 
-  //submits search request INDEX.HTML Page!!!!!!
   $(document).on('click', '#search-submit', function(){
 
-    $('#main').empty();
-    $('#search-results').empty();
-    // $("#intro-image").addClass('hide');
+      // Get a database reference to our posts
+      var ref = new Firebase("https://i-was-here.firebaseio.com/users");
 
-    //grabs the value from the input textfield
-    var term = $('#search').val().trim(); 
+      // Attach an asynchronous callback to read the data at our posts reference
+      ref.on("child_added", function(snapshot) {
+        console.log(snapshot.val());
+        console.log(user);
+        console.log(snapshot.key());
+        var idKey = snapshot.key();
+        var ref2 = new Firebase("https://i-was-here.firebaseio.com/users/" + idKey);
 
-    var searchPic = "";
-    var searchName = "";
-    var searchLocation = "";
-    var searchType = "";
-    var searchHours = "";
+        ref2.on("child_added", function(snapshot) {
+        console.log(snapshot.val());
 
-    //query string for api that includes search parameter
-    var queryURL = "https://crossorigin.me/https://maps.googleapis.com/maps/api/place/textsearch/json?query="+ term +"&key=AIzaSyCQMIrfC5T4I3TSO_avZHcEe2Uuwe9zViM";
+        },
+        function (errorObject) {
+          console.log("The read failed: " + errorObject.code);
+        });
 
-    //ajax makes request and returns the response
-    $.ajax({url: queryURL, method: 'GET'}).done(function(response) {
-
-        //console.log(response.results);
-        //console.log(response.results[0].photos[0].photo_reference);
-        for (i = 0; i < response.results.length; i++) {
-            var firstQuery = response.results[i].place_id;
-            //console.log(response.results[i].place_id);
-            //var locationData = response.results;
-            deepQuery(firstQuery);
-        }
-
-    });
-
-    function deepQuery(firstQuery){
-
-      //console.log(firstQuery);
-
-      var secondQuery = "https://crossorigin.me/https://maps.googleapis.com/maps/api/place/details/json?placeid="+ firstQuery +"&key=AIzaSyCQMIrfC5T4I3TSO_avZHcEe2Uuwe9zViM";
-
-      $.ajax({url: secondQuery, method: 'GET'}).done(function(deepResponse) {
-          
-        console.log(deepResponse.result);
-
-        var searchDiv = $('<div class="panel panel-primary">'); //creates a div with class
-
-        var searchDivHead = $('<div class="panel-heading">'); //creates a div with class
-
-        var searchDivTitle = $('<div class="panel-title">'); //creates a div with class
-
-        var searchDivBody = $('<div class="panel-body">'); //creates a div with class
-
-        var a = $("<a>").attr("href", deepResponse.result.url);
-        a.attr('target', '_blank');
-
-        var searchImage = $('<img>'); //creates a new image element
-        searchImage.attr('src', "https://crossorigin.me/https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference="+ deepResponse.result.photos[0].photo_reference +"&key=AIzaSyCQMIrfC5T4I3TSO_avZHcEe2Uuwe9zViM"); //added src attribut from google
-        searchImage.addClass('story-image'); //added class to image
-
-        var searchTitle = $('<h2>'); //creates a h2 element
-        searchTitle.addClass('story-title'); //adds class to h2
-        searchTitle.text(deepResponse.result.name); //adds text from DB title
-
-        var searchAddress = $('<h3>'); //creates a paragraph
-        searchAddress.text(deepResponse.result.formatted_address); //adds text from DB body
-        searchAddress.addClass('search-body'); //added class to body
-
-        var searchPhone = $('<h3>'); //creates a paragraph
-        searchPhone.text(deepResponse.result.formatted_phone_number); //adds text from DB body
-        searchPhone.addClass('search-body'); //added class to body
-
-        // var searchText = $('<a>'); //creates a paragraph
-        // searchText.attr('href', deepResponse.result.website);
-        // searchText.text("Visit " + deepResponse.result.name); //adds text from DB body
-        // searchText.addClass('search-body'); //added class to body
-
-        // var searchReview = $('<p>'); //creates a paragraph
-        // searchReview.text(deepResponse.result.reviews[0].text); //adds text from DB body
-        // searchReview.addClass('search-body'); //added class to body
-
-        a.append(searchImage);
-        searchDivBody.append(a)//appends the image to the div
-        searchDivTitle.append(searchTitle)//appends the title to the div
-        searchDivBody.append(searchAddress)//appends the body text to the div
-        searchDivBody.append(searchPhone)//appends the body text to the div
-        //searchDivBody.append(searchText)//appends the body text to the div
-        //searchDivBody.append(searchReview)//appends the body text to the div
-
-        searchDiv.append(searchDivHead)//appends the head to the panel
-        searchDiv.append(searchDivBody)//appends the body to the panel
-        searchDivHead.append(searchDivTitle)//appends the title to the head
-
-        $('#search-results').prepend(searchDiv);//prepends entire story div to main-content div
-       
+      },  
+      function (errorObject) {
+        console.log("The read failed: " + errorObject.code);
       });
-    }
-    // Don't refresh the page!
-    return false;
+      return false;
   });
+
+  //submits search request INDEX.HTML Page!!!!!!
+  // $(document).on('click', '#search-submit', function(){
+
+  //   $('#main').empty();
+  //   $('#search-results').empty();
+  //   // $("#intro-image").addClass('hide');
+
+  //   //grabs the value from the input textfield
+  //   var term = $('#search').val().trim(); 
+
+  //   var searchPic = "";
+  //   var searchName = "";
+  //   var searchLocation = "";
+  //   var searchType = "";
+  //   var searchHours = "";
+
+  //   //query string for api that includes search parameter
+  //   var queryURL = "https://crossorigin.me/https://maps.googleapis.com/maps/api/place/textsearch/json?query="+ term +"&key=AIzaSyCQMIrfC5T4I3TSO_avZHcEe2Uuwe9zViM";
+
+  //   //ajax makes request and returns the response
+  //   $.ajax({url: queryURL, method: 'GET'}).done(function(response) {
+
+  //       //console.log(response.results);
+  //       //console.log(response.results[0].photos[0].photo_reference);
+  //       for (i = 0; i < response.results.length; i++) {
+  //           var firstQuery = response.results[i].place_id;
+  //           //console.log(response.results[i].place_id);
+  //           //var locationData = response.results;
+  //           deepQuery(firstQuery);
+  //       }
+
+  //   });
+
+  //   function deepQuery(firstQuery){
+
+  //     //console.log(firstQuery);
+
+  //     var secondQuery = "https://crossorigin.me/https://maps.googleapis.com/maps/api/place/details/json?placeid="+ firstQuery +"&key=AIzaSyCQMIrfC5T4I3TSO_avZHcEe2Uuwe9zViM";
+
+  //     $.ajax({url: secondQuery, method: 'GET'}).done(function(deepResponse) {
+          
+  //       console.log(deepResponse.result);
+
+  //       var searchDiv = $('<div class="panel panel-primary">'); //creates a div with class
+
+  //       var searchDivHead = $('<div class="panel-heading">'); //creates a div with class
+
+  //       var searchDivTitle = $('<div class="panel-title">'); //creates a div with class
+
+  //       var searchDivBody = $('<div class="panel-body">'); //creates a div with class
+
+  //       var a = $("<a>").attr("href", deepResponse.result.url);
+  //       a.attr('target', '_blank');
+
+  //       var searchImage = $('<img>'); //creates a new image element
+  //       searchImage.attr('src', "https://crossorigin.me/https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference="+ deepResponse.result.photos[0].photo_reference +"&key=AIzaSyCQMIrfC5T4I3TSO_avZHcEe2Uuwe9zViM"); //added src attribut from google
+  //       searchImage.addClass('story-image'); //added class to image
+
+  //       var searchTitle = $('<h2>'); //creates a h2 element
+  //       searchTitle.addClass('story-title'); //adds class to h2
+  //       searchTitle.text(deepResponse.result.name); //adds text from DB title
+
+  //       var searchAddress = $('<h3>'); //creates a paragraph
+  //       searchAddress.text(deepResponse.result.formatted_address); //adds text from DB body
+  //       searchAddress.addClass('search-body'); //added class to body
+
+  //       var searchPhone = $('<h3>'); //creates a paragraph
+  //       searchPhone.text(deepResponse.result.formatted_phone_number); //adds text from DB body
+  //       searchPhone.addClass('search-body'); //added class to body
+
+  //       // var searchText = $('<a>'); //creates a paragraph
+  //       // searchText.attr('href', deepResponse.result.website);
+  //       // searchText.text("Visit " + deepResponse.result.name); //adds text from DB body
+  //       // searchText.addClass('search-body'); //added class to body
+
+  //       // var searchReview = $('<p>'); //creates a paragraph
+  //       // searchReview.text(deepResponse.result.reviews[0].text); //adds text from DB body
+  //       // searchReview.addClass('search-body'); //added class to body
+
+  //       a.append(searchImage);
+  //       searchDivBody.append(a)//appends the image to the div
+  //       searchDivTitle.append(searchTitle)//appends the title to the div
+  //       searchDivBody.append(searchAddress)//appends the body text to the div
+  //       searchDivBody.append(searchPhone)//appends the body text to the div
+  //       //searchDivBody.append(searchText)//appends the body text to the div
+  //       //searchDivBody.append(searchReview)//appends the body text to the div
+
+  //       searchDiv.append(searchDivHead)//appends the head to the panel
+  //       searchDiv.append(searchDivBody)//appends the body to the panel
+  //       searchDivHead.append(searchDivTitle)//appends the title to the head
+
+  //       $('#search-results').prepend(searchDiv);//prepends entire story div to main-content div
+       
+  //     });
+  //   }
+  //   // Don't refresh the page!
+  //   return false;
+  // });
 
     // function renderIndexSearch(search, name, location, type, wholeResponse){
 
