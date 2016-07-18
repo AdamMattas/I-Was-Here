@@ -177,7 +177,7 @@ $(document).on('ready', function(){
     return false;
   });
 
-  //Listens for Remove Story Button Click
+  //Listens for Read Story Button Click
   $(document).on('click', '.story-read', function(){
 
     //Grabs firebase child key stored in the button's data-id attribute
@@ -186,20 +186,19 @@ $(document).on('ready', function(){
     window.location.assign("story.html?id=" + storyId + "&name=" + user);
 
     console.log(storyId);
-    //Removes child with corresponding key from firebase
 
   });
 
-  //Listens for Remove Story Button Click
+  //Listens for Read Story Button Click
   $(document).on('click', '.story-read-post', function(){
 
     //Grabs firebase child key stored in the button's data-id attribute
     storyId = $(this).attr('data-id');
+    idKey = $(this).attr('data-name');
 
     window.location.assign("posting.html?id=" + storyId + "&name=" + idKey);
 
     console.log(storyId);
-    //Removes child with corresponding key from firebase
 
   });
 
@@ -250,6 +249,7 @@ $(document).on('ready', function(){
   }
 
   $(document).on('click', '#search-submit', function(){
+      $('#main').empty();
       //grabs the value from the input textfield
       var term = $('#search').val().trim();
       //term = term.toLowerCase();
@@ -299,8 +299,6 @@ $(document).on('ready', function(){
           storyTitle.addClass('story-title'); //adds class to h2
           storyTitle.text(snapshot.val().story.title); //adds text from DB title
 
-          
-
           var str = snapshot.val().story.body;
           if(str.length > 900) str = str.substring(0,900);
           str = (str.slice(0,-3) + '...');
@@ -324,7 +322,7 @@ $(document).on('ready', function(){
           storyDiv.append(storyDivBody)//appends the image to the div
           storyDivHead.append(storyDivTitle)//appends the image to the div
 
-          $('#main-content').prepend(storyDiv);//prepends entire story div to main-content div
+          $('#search-results').prepend(storyDiv);//prepends entire story div to main-content div
         }else{
           console.log(false);
         }
