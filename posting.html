@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>I Was Here</title>
+
+  <!-- CSS Reset -->
+  <link rel="stylesheet" href="assets/css/reset.css">
+
+  <!-- Bootstrap CDN-->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+  <!-- Firebase Reference -->
+  <script src="https://cdn.firebase.com/js/client/2.4.1/firebase.js"></script>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="assets/css/style.css">
+
+</head>
+
+<body>
+
+  <div class="page-wrapper">
+
+    <div class="logo"></div>
+    <div class="world"></div>
+    <div class="logo2"></div>
+    <div class="divider"></div>
+    <div id="login-button" class="login show" data-toggle="modal" data-target="#loginModal"></div>
+    <div id="logout-button" class="logout hide"></div>
+
+    <div class="header">
+
+      <div class="header-image"></div>
+
+    </div>
+
+    <!-- Modal for editing added trains -->
+    <div class="modal fade" id="signModal" role="dialog">
+      <div class="modal-dialog">
+      
+        <!-- Modal content inputs populated from script.js-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Sign Up</h4>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="signName">Username</label>
+                <input type="text" class="form-control" id="signName" required>
+              </div>
+              <div class="form-group">
+                <label for="signEmail">Email Address</label>
+                <input type="text" class="form-control" id="signEmail" required>
+              </div>
+              <div class="form-group">
+                <label for="signPass">Password</label>
+                <input type="password" class="form-control" id="signPass" required>
+              </div>
+              <input id="signSubmit" type="submit" class="btn btn-default btn-underride">
+            </form>
+          </div>
+          <div class="modal-footer">
+            <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+          </div>
+        </div>
+        
+      </div>
+    </div>
+
+    <!-- Modal for editing added stories -->
+    <div class="modal fade" id="storyModal" role="dialog">
+      <div class="modal-dialog">
+      
+        <!-- Modal content inputs populated from script.js-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Tell Us Your Story</h4>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="storyTitle">Title</label>
+                <input type="text" class="form-control" id="storyTitle" placeholder="Give your story a title" required>
+              </div>
+              <div class="form-group">
+                <label for="storyImage">Story Image</label>
+                <input type="text" class="form-control" id="storyImage" placeholder="http://example-picture.jpg">
+              </div>
+              <div class="form-group">
+                <label for="storyBody">Your Story</label>
+                <textarea type="text" class="form-control" id="storyBody" placeholder="Start your story..." required></textarea>
+              </div>            
+                <label for="keyPanel">Add up to 10 Keywords for places mentioned in your story.</label>
+                <p>Keywords will help people find your story, and will be clickable for info.</p>
+              <div id="keyPanel" class="form-group">
+
+                <div class="col-md-6">
+                  
+                  <input type="text" class="form-control modal-input-margin" id="storyKeyword1" placeholder="Keyword 1" required>
+                  <input type="text" class="form-control modal-input-margin" id="storyKeyword3" placeholder="Keyword 3">
+                  <input type="text" class="form-control modal-input-margin" id="storyKeyword5" placeholder="Keyword 5">
+                  <input type="text" class="form-control modal-input-margin" id="storyKeyword7" placeholder="Keyword 7">
+                  <input type="text" class="form-control modal-input-margin" id="storyKeyword9" placeholder="Keyword 9">
+
+                </div>
+
+                <div class="col-md-6">
+                  
+                  <input type="text" class="form-control modal-input-margin" id="storyKeyword2" placeholder="Keyword 2">
+                  <input type="text" class="form-control modal-input-margin" id="storyKeyword4" placeholder="Keyword 4">
+                  <input type="text" class="form-control modal-input-margin" id="storyKeyword6" placeholder="Keyword 6">
+                  <input type="text" class="form-control modal-input-margin" id="storyKeyword8" placeholder="Keyword 8">
+                  <input type="text" class="form-control modal-input-margin" id="storyKeyword10" placeholder="Keyword 10">
+
+                </div>
+
+              </div>
+              <input id="storySubmit" type="submit" class="btn btn-default btn-underride">
+            </form>
+          </div>
+          <div class="modal-footer">
+            <!-- <button type="button" class="btn btn-default btn-underride" data-dismiss="modal">Close</button> -->
+          </div>
+        </div>
+        
+      </div>
+    </div>
+
+    <div class="inner">
+      
+      <div class="search">
+        <form>
+          <div class="search-cover"></div>
+          <input id="search" type="text" class="form-control input-sm" maxlength="64" placeholder="Search" />
+          <button id="search-submit-story" class="btn btn-primary black">Search</button>
+        </form>
+      </div>
+      <!-- Single button -->
+      <div id="nav-logged" class="btn-group right">
+        <!-- <a id="user-button" href="user.html" class="btn btn-primary blue hide"></a> -->
+        <a href="index.html" class="btn btn-primary home">Home</a>
+        <a href="index.html" class="btn btn-primary about">About</a>
+      </div>
+      
+    </div>
+
+    <div class="trees2"></div>
+    <div class="trees"></div>
+
+    <div class="content-wrapper">
+      <div id="main-content" class="col-md-8"></div>
+      <div id="side-content" class="col-md-4">
+        <div id="google-api" class="panel panel-primary hide">
+          <div class="panel-heading">
+            <h3 id="api-title" class="panel-title"></h3>
+          </div>
+          <div class="panel-body">
+            <p id="api-address"></p>
+            <img id="api-image">
+            <p id="api-type"></p>
+            <p id="api-hours" class="api-blue"></p>
+          </div>
+        </div>
+
+        <div id="weather-api" class="panel panel-primary hide">
+          <div class="panel-heading">
+            <h3 id="weather-title" class="panel-title"></h3>
+          </div>
+          <div class="panel-body">
+            <div class="section">
+              <div class="pic">
+                <img class="icon" src=""> 
+                <!--placeholder-->
+              </div>
+              <ul class="content">
+                <li class="city"><!--city/state_name(display_location)--></li>
+                <li class="state"></li>
+                <li class="degrees"><!--temperature_string--></li>
+                <li class="weather"><!--weather--></li>
+                <li class="time"><!--local_time_rfc822--></li>
+                <li class="wind"><!--wind_string--></li>
+                <li class="humidity"><!--relative_humidity--></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer"></div>
+
+  </div>
+  
+
+<!-- added link to js file -->
+<script type="text/javascript" src="assets/javascript/script.js"></script>
+<script type="text/javascript" src="assets/javascript/story.js"></script>
+
+</body>
+
+</html>

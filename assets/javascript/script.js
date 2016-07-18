@@ -5,6 +5,7 @@ $(document).on('ready', function(){
   var user = "";
   var userName = "";
   var keyId = "";
+  var idKey;
    
   // Firebase link
   var dataRef = new Firebase("https://i-was-here.firebaseio.com/");
@@ -190,6 +191,19 @@ $(document).on('ready', function(){
   });
 
   //Listens for Remove Story Button Click
+  $(document).on('click', '.story-read-post', function(){
+
+    //Grabs firebase child key stored in the button's data-id attribute
+    storyId = $(this).attr('data-id');
+
+    window.location.assign("posting.html?id=" + storyId + "&name=" + idKey);
+
+    console.log(storyId);
+    //Removes child with corresponding key from firebase
+
+  });
+
+  //Listens for Remove Story Button Click
   $(document).on('click', '.delete-btn', function(){
 
     //targets specific user node in Firebase DB
@@ -236,6 +250,9 @@ $(document).on('ready', function(){
   }
 
   $(document).on('click', '#search-submit', function(){
+      //grabs the value from the input textfield
+      var term = $('#search').val().trim();
+      //term = term.toLowerCase();
 
       // Get a database reference to our posts
       var ref = new Firebase("https://i-was-here.firebaseio.com/users");
@@ -243,13 +260,99 @@ $(document).on('ready', function(){
       // Attach an asynchronous callback to read the data at our posts reference
       ref.on("child_added", function(snapshot) {
         console.log(snapshot.val());
-        console.log(user);
         console.log(snapshot.key());
-        var idKey = snapshot.key();
+        idKey = snapshot.key();
         var ref2 = new Firebase("https://i-was-here.firebaseio.com/users/" + idKey);
 
         ref2.on("child_added", function(snapshot) {
         console.log(snapshot.val());
+        console.log(snapshot.val().story.keyword1);
+        console.log(idKey);
+
+        //var k1 = snapshot.val().story. + keyword1 +.search(term);
+        var t = snapshot.val().story.title.search(term);
+        var k1 = snapshot.val().story.keyword1.search(term);
+        var k2 = snapshot.val().story.keyword2.search(term);
+        var k3 = snapshot.val().story.keyword3.search(term);
+        var k4 = snapshot.val().story.keyword4.search(term);
+        var k5 = snapshot.val().story.keyword5.search(term);
+        var k6 = snapshot.val().story.keyword6.search(term);
+        var k7 = snapshot.val().story.keyword7.search(term);
+        var k8 = snapshot.val().story.keyword8.search(term);
+        var k9 = snapshot.val().story.keyword9.search(term);
+        var k10 = snapshot.val().story.keyword10.search(term);
+        if(t > -1 || k1 > -1 || k2 > -1 || k3 > -1 || k4 > -1 || k5 > -1 || k6 > -1 || k7 > -1 || k8 > -1 || k9 > -1 || k10 > -1){
+          console.log(snapshot.val().story);
+          var storyDiv = $('<div class="panel panel-primary">'); //creates a div with class
+
+          var storyDivHead = $('<div class="panel-heading">'); //creates a div with class
+
+          var storyDivTitle = $('<div class="panel-title">'); //creates a div with class
+
+          var storyDivBody = $('<div class="panel-body">'); //creates a div with class
+
+          var storyImage = $('<img>'); //creates a new image element
+          storyImage.attr('src', snapshot.val().story.image); //added src attribut from DB
+          storyImage.addClass('story-image'); //added class to image
+
+          var storyTitle = $('<h2>'); //creates a h2 element
+          storyTitle.addClass('story-title'); //adds class to h2
+          storyTitle.text(snapshot.val().story.title); //adds text from DB title
+
+          
+
+          var str = snapshot.val().story.body;
+          if(str.length > 900) str = str.substring(0,900);
+          str = (str.slice(0,-3) + '...');
+          var storyBody = $('<p>'); //creates a paragraph
+          storyBody.text(str); //adds text from DB body
+          storyBody.addClass('story-body'); //added class to button
+
+          var readBtn = $('<button>'); //creates a button element
+          readBtn.attr('data-id', snapshot.key()); //added data attribute that points to exact DB node
+          readBtn.attr('data-name', idKey); //added data attribute that points to exact DB node
+          readBtn.addClass('story-read-post'); //adds class to button
+          readBtn.text('View Entire Post'); //added button text
+          readBtn.addClass('read-btn'); //added class to button
+
+          storyDivBody.append(storyImage)//appends the image to the div
+          storyDivTitle.append(storyTitle)//appends the image to the div
+          storyDivBody.append(storyBody)//appends the image to the div
+          storyDivBody.append(readBtn)//appends the image to the div
+
+          storyDiv.append(storyDivHead)//appends the image to the div
+          storyDiv.append(storyDivBody)//appends the image to the div
+          storyDivHead.append(storyDivTitle)//appends the image to the div
+
+          $('#main-content').prepend(storyDiv);//prepends entire story div to main-content div
+        }else{
+          console.log(false);
+        }
+
+        
+        // if(k2 > -1){
+        //   console.log(idKey);
+        // }else{
+        //   console.log(false);
+        // }
+
+        
+        // if(k3 > -1){
+        //   console.log(idKey);
+        // }else{
+        //   console.log(false);
+        // }
+        // for(var i = 1; i < 11; i++){
+        //   var keyterm = "keyword" + (i);
+        //   //keyterm + (i).toString();
+        //   console.log(keyterm);
+        //   var n = snapshot.val().story.keyword1.search(term);
+        //   if(n > -1){
+        //     console.log(true);
+        //   }else{
+        //     console.log(false);
+        //   }
+        // }
 
         },
         function (errorObject) {

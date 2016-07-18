@@ -443,6 +443,11 @@ h3{
   float: right;
 }
 
+.story-read-post{
+  position: relative;
+  float: right;
+}
+
 .story-edit{
   position: relative;
   float: right;
